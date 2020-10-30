@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-10-30 16:08:19
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-10-30 16:54:48
+ * @LastEditTime: 2020-10-30 17:01:08
 -->
 <template>
   <el-row>
@@ -21,6 +21,11 @@
     <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
       <span class="title">嵌套饼图</span>
       <div id="pieCtn" class="item-chart" />
+    </el-col>
+    <!-- 气泡图 -->
+    <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
+      <span class="title">气泡图</span>
+      <div id="bubbleCtn" class="item-chart" />
     </el-col>
   </el-row>
 </template>
@@ -44,6 +49,7 @@ export default {
       this.drawDashboard()
       this.drawRose()
       this.drawPie()
+      this.drawBubble()
     }
 
   }
