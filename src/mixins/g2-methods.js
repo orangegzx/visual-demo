@@ -3,12 +3,13 @@
  * @Descripttion:
  * @Date: 2020-10-30 15:10:15
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-10-30 17:39:55
+ * @LastEditTime: 2020-10-30 18:08:20
  */
 import Data from '@/mixins/g2-data'
+import { MAP_DATA } from '@/utils/map-date'
 import { Chart } from '@antv/g2'
 import { DataView } from '@antv/data-set'
-// import DataSet from '@antv/data-set'
+import DataSet from '@antv/data-set'
 
 export default {
   mixins: [Data],
@@ -472,6 +473,70 @@ export default {
       chart.interaction('element-active')
 
       chart.render()
+    },
+
+    // 地图
+    drawMap() {
+      const ds = new DataSet()
+      const dv = ds.createView('back').source(MAP_DATA, {
+        type: 'GeoJSON'
+      })
+      const userDv = ds
+        .createView()
+        .source(this.mapUserData)
+        .transform({
+          geoDataView: dv,
+          field: 'name',
+          type: 'geo.centroid',
+          as: ['longitude', 'latitude']
+        })
+      const chart = new Chart({
+        container: 'mapCtn',
+        autoFit: true
+        // height: 500,
+      })
+      chart.scale({
+        longitude: {
+          sync: true
+        },
+        latitude: {
+          sync: true
+        }
+      })
+      chart.axis(false)
+
+      chart.legend({ position: 'right' })
+      chart.tooltip({
+        showTitle: false,
+        showMarkers: false
+      })
+      const bgView = chart.createView()
+      bgView.data(dv.rows)
+      bgView.tooltip(false)
+      bgView
+        .polygon()
+        .position('longitude*latitude')
+        .color('#ebedf0')
+        .style({
+          lineWidth: 1,
+          stroke: '#fafbfc'
+        })
+
+      const userView = chart.createView()
+      userView.data(userDv.rows)
+      userView
+        .point()
+        .position('longitude*latitude')
+        .color('#1890ff')
+        .shape('circle')
+        .size('value', [5, 15])
+        .style({
+          lineWidth: 1,
+          stroke: '#1890ff'
+        })
+      userView.interaction('element-active')
+      chart.render()
     }
+
   }
 }

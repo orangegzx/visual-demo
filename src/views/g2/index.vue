@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-10-30 16:08:19
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-10-30 17:36:56
+ * @LastEditTime: 2020-10-30 18:11:52
 -->
 <template>
   <el-row>
@@ -37,6 +37,11 @@
       <span class="title">金字塔漏斗图</span>
       <div id="pyramidFunnelCtn" class="item-chart" />
     </el-col>
+    <!-- 地图 -->
+    <el-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24" class="item item-map">
+      <span class="title">地图</span>
+      <div id="mapCtn" class="item-chart" />
+    </el-col>
   </el-row>
 </template>
 
@@ -62,6 +67,7 @@ export default {
       this.drawBubble()
       this.drawBaseFunnel()
       this.drawPyramidFunnel()
+      this.drawMap()
     }
 
   }
@@ -72,14 +78,19 @@ export default {
 .item {
   height: 400px;
   width: 600px;
-  padding: 20px;
+  padding: 20px 0 30px 0;
   text-align: center;
   border-bottom: solid 1px #e2e2e2;
   margin: 20px 0;
 }
+.item-map {
+  // width: 100%;
+}
 .item .title {
+  display: inline-block;
   color: #666;
   text-align: center;
+  padding-bottom: 10px;
 }
 .item-chart {
   height: 100%;
