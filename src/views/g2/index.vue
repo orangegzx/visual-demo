@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-10-30 16:08:19
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-10-30 18:11:52
+ * @LastEditTime: 2020-10-30 18:18:44
 -->
 <template>
   <el-row>
@@ -42,6 +42,11 @@
       <span class="title">地图</span>
       <div id="mapCtn" class="item-chart" />
     </el-col>
+    <!-- 关系图 -->
+    <el-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24" class="item item-map">
+      <span class="title">关系图</span>
+      <div id="relationCtn" class="item-chart" />
+    </el-col>
   </el-row>
 </template>
 
@@ -68,6 +73,7 @@ export default {
       this.drawBaseFunnel()
       this.drawPyramidFunnel()
       this.drawMap()
+      this.drawRelation()
     }
 
   }

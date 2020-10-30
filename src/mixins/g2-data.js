@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-10-30 15:10:15
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-10-30 18:07:15
+ * @LastEditTime: 2020-10-30 18:14:57
  */
 // import { MAP_DATA } from '@/utils/map-date'
 
@@ -488,7 +488,35 @@ export default {
         { name: 'Afghanistan', value: 106.5 },
         { name: 'Kazakhstan', value: 93.4 },
         { name: 'Indonesia', value: 101.4 }
-      ]
+      ],
+
+      // 关系图
+      relationData: {
+        name: 'root',
+        children: [
+          { name: '分类 1', value: 560 },
+          { name: '分类 2', value: 500 },
+          { name: '分类 3', value: 150 },
+          { name: '分类 4', value: 140 },
+          { name: '分类 5', value: 115 },
+          { name: '分类 6', value: 95 },
+          { name: '分类 7', value: 90 },
+          { name: '分类 8', value: 75 },
+          { name: '分类 9', value: 98 },
+          { name: '分类 10', value: 60 },
+          { name: '分类 11', value: 45 },
+          { name: '分类 12', value: 40 },
+          { name: '分类 13', value: 40 },
+          { name: '分类 14', value: 35 },
+          { name: '分类 15', value: 40 },
+          { name: '分类 16', value: 40 },
+          { name: '分类 17', value: 40 },
+          { name: '分类 18', value: 30 },
+          { name: '分类 19', value: 28 },
+          { name: '分类 20', value: 16 }
+        ]
+      }
+
     }
   }
 }

@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-10-30 15:10:15
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-10-30 18:08:20
+ * @LastEditTime: 2020-10-30 18:19:43
  */
 import Data from '@/mixins/g2-data'
 import { MAP_DATA } from '@/utils/map-date'
@@ -535,6 +535,90 @@ export default {
           stroke: '#1890ff'
         })
       userView.interaction('element-active')
+      chart.render()
+    },
+
+    // 关系图
+    drawRelation() {
+      const dv = new DataView()
+      dv.source(this.relationData, {
+        type: 'hierarchy'
+      }).transform({
+        field: 'value',
+        type: 'hierarchy.treemap',
+        tile: 'treemapResquarify',
+        as: ['x', 'y']
+      })
+
+      // 将 DataSet 处理后的结果转换为 G2 接受的数据
+      const nodes = []
+      for (const node of dv.getAllNodes()) {
+        if (node.data.name === 'root') {
+          continue
+        }
+        const eachNode = {
+          name: node.data.name,
+          x: node.x,
+          y: node.y,
+          value: node.data.value
+        }
+        nodes.push(eachNode)
+      }
+
+      const chart = new Chart({
+        container: 'relationCtn',
+        autoFit: true,
+        height: 500
+      })
+      chart.data(nodes)
+      chart.scale({
+        x: {
+          nice: true
+        },
+        y: {
+          nice: true
+        }
+      })
+
+      chart.axis(false)
+      chart.legend(false)
+      chart.tooltip({
+        showTitle: false,
+        showMarkers: false,
+        itemTpl:
+          '<li style="list-style: none;">' +
+          '<span style="background-color:{color};" class="g2-tooltip-marker"></span>' +
+          '{name}<br/>' +
+          '<span style="padding-left: 16px">浏览人数：{count}</span><br/>' +
+          '</li>'
+      })
+      chart
+        .polygon()
+        .position('x*y')
+        .color('name')
+        .tooltip('name*value', (name, count) => {
+          return {
+            name,
+            count
+          }
+        })
+        .style({
+          lineWidth: 1,
+          stroke: '#fff'
+        })
+        .label('name', {
+          offset: 0,
+          style: {
+            textBaseline: 'middle'
+          },
+          content: (obj) => {
+            if (obj.name !== 'root') {
+              return obj.name
+            }
+          }
+        })
+      chart.interaction('element-active')
+
       chart.render()
     }
 
