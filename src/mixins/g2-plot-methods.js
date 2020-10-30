@@ -3,9 +3,9 @@
  * @Descripttion:
  * @Date: 2020-10-30 15:10:15
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-10-30 15:48:03
+ * @LastEditTime: 2020-10-30 16:33:32
  */
-import Data from '@/mixins/data.js'
+import Data from '@/mixins/g2-plot-data'
 import { Liquid } from '@antv/g2plot'
 import { Line } from '@antv/g2plot'
 import { Box } from '@antv/g2plot'

@@ -1,40 +1,35 @@
 <!--
  * @Author: gezuxia
  * @Descripttion:
- * @Date: 2020-10-23 15:18:02
+ * @Date: 2020-10-30 16:08:19
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-10-30 16:33:22
+ * @LastEditTime: 2020-10-30 16:54:48
 -->
 <template>
   <el-row>
-    <!-- 折线图 -->
+    <!-- 仪表盘 -->
     <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
-      <span class="title">折线图</span>
-      <div id="lineCtn" class="item-chart" />
+      <span class="title">仪表盘</span>
+      <div id="dashboardCtn" class="item-chart" />
     </el-col>
-    <!-- 水波图 -->
+    <!-- 南丁格尔玫瑰图 -->
     <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
-      <span class="title">水波图</span>
-      <div id="liquidPCtn" class="item-chart" />
+      <span class="title">玫瑰图</span>
+      <div id="roseCtn" class="item-chart" />
     </el-col>
-    <!-- 箱型图 -->
+    <!-- 嵌套饼图 -->
     <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
-      <span class="title">箱型图</span>
-      <div id="boxCtn" class="item-chart" />
-    </el-col>
-    <!-- 雷达图 -->
-    <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
-      <span class="title">雷达图</span>
-      <div id="radarCtn" class="item-chart" />
+      <span class="title">嵌套饼图</span>
+      <div id="pieCtn" class="item-chart" />
     </el-col>
   </el-row>
 </template>
 
 <script>
-import MethodsFile from '@/mixins/g2-plot-methods'
+import MethodsFile from '@/mixins/g2-methods'
 
 export default {
-  name: 'G2PlotPage',
+  name: 'G2Page',
   mixins: [MethodsFile],
 
   data() {
@@ -46,10 +41,9 @@ export default {
   },
   methods: {
     init() {
-      this.drawLine()
-      this.drawLiquid()
-      this.drawBox()
-      this.drawRadar()
+      this.drawDashboard()
+      this.drawRose()
+      this.drawPie()
     }
 
   }
@@ -63,6 +57,7 @@ export default {
   padding: 20px;
   text-align: center;
   border-bottom: solid 1px #e2e2e2;
+  margin: 20px 0;
 }
 .item .title {
   color: #666;
