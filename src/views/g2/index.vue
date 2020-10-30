@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-10-30 16:08:19
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-10-30 17:01:08
+ * @LastEditTime: 2020-10-30 17:36:56
 -->
 <template>
   <el-row>
@@ -26,6 +26,16 @@
     <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
       <span class="title">气泡图</span>
       <div id="bubbleCtn" class="item-chart" />
+    </el-col>
+    <!-- 基础漏斗图 -->
+    <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
+      <span class="title">基础漏斗图</span>
+      <div id="baseFunnelCtn" class="item-chart" />
+    </el-col>
+    <!-- 尖端漏斗图 -->
+    <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
+      <span class="title">金字塔漏斗图</span>
+      <div id="pyramidFunnelCtn" class="item-chart" />
     </el-col>
   </el-row>
 </template>
@@ -50,6 +60,8 @@ export default {
       this.drawRose()
       this.drawPie()
       this.drawBubble()
+      this.drawBaseFunnel()
+      this.drawPyramidFunnel()
     }
 
   }

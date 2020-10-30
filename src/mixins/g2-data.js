@@ -3,12 +3,13 @@
  * @Descripttion:
  * @Date: 2020-10-30 15:10:15
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-10-30 17:00:12
+ * @LastEditTime: 2020-10-30 17:27:26
  */
 
 export default {
   data() {
     return {
+      // 玫瑰图
       roseData: [
         { year: '2001', population: 41.8 },
         { year: '2002', population: 38 },
@@ -23,6 +24,7 @@ export default {
         { year: '2011', population: 42.5 },
         { year: '2012', population: 30.3 }
       ],
+      // 嵌套饼图
       pieData: [
         { value: 251, type: '大事例一', name: '子事例一' },
         { value: 1048, type: '大事例一', name: '子事例二' },
@@ -31,7 +33,7 @@ export default {
         { value: 335, type: '大事例三', name: '子事例五' },
         { value: 250, type: '大事例三', name: '子事例六' }
       ],
-
+      // 气泡
       bubbleData: [
         {
           'continent': 'Americas',
@@ -453,7 +455,16 @@ export default {
           'GDP': 25185.00911,
           'Population': 4115771
         }
+      ],
+      // 漏斗
+      funnelData: [
+        { action: '浏览网站', pv: 50000 },
+        { action: '放入购物车', pv: 35000 },
+        { action: '生成订单', pv: 25000 },
+        { action: '支付订单', pv: 15000 },
+        { action: '完成交易', pv: 8000 }
       ]
+      //
     }
   }
 }
