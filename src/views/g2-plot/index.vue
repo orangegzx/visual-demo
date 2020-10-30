@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-10-23 15:18:02
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-10-30 15:34:22
+ * @LastEditTime: 2020-10-30 15:45:47
 -->
 <template>
   <el-row>
@@ -21,6 +21,11 @@
     <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
       <span class="title">箱型图</span>
       <div id="boxCtn" class="item-chart" />
+    </el-col>
+    <!-- 雷达图 -->
+    <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
+      <span class="title">雷达图</span>
+      <div id="radarCtn" class="item-chart" />
     </el-col>
   </el-row>
 </template>
@@ -44,6 +49,7 @@ export default {
       this.drawLine()
       this.drawLiquid()
       this.drawBox()
+      this.drawRadar()
     }
 
   }
