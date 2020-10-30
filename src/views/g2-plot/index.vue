@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-10-23 15:18:02
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-10-28 17:38:56
+ * @LastEditTime: 2020-10-30 15:34:22
 -->
 <template>
   <el-row>
@@ -17,60 +17,35 @@
       <span class="title">水波图</span>
       <div id="liquidPCtn" class="item-chart" />
     </el-col>
+    <!-- 箱型图 -->
+    <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
+      <span class="title">箱型图</span>
+      <div id="boxCtn" class="item-chart" />
+    </el-col>
   </el-row>
 </template>
 
 <script>
-import { Liquid } from '@antv/g2plot'
-import { Line } from '@antv/g2plot'
+import MethodsFile from '@/mixins/methods'
 
 export default {
-  name: 'G2Plot',
+  name: 'G2PlotPage',
+  mixins: [MethodsFile],
+
   data() {
     return {
-      data: [
-        { year: '1991', value: 3 },
-        { year: '1992', value: 4 },
-        { year: '1993', value: 3.5 },
-        { year: '1994', value: 5 },
-        { year: '1995', value: 4.9 },
-        { year: '1996', value: 6 },
-        { year: '1997', value: 7 },
-        { year: '1998', value: 9 },
-        { year: '1999', value: 13 }
-      ]
     }
   },
   mounted() {
-    this.drawLine()
-    this.drawLiquid()
+    this.init()
   },
   methods: {
-    // 基础折线图
-    drawLine() {
-      const linePlot = new Line('lineCtn', {
-        data: this.data,
-        xField: 'year',
-        yField: 'value'
-      })
-      linePlot.render()
-    },
-
-    // 水波图
-    drawLiquid() {
-      const liquidPlot = new Liquid('liquidPCtn', {
-        percent: 0.25,
-        statistic: {
-          content: {
-            style: {
-              fontSize: 60,
-              fill: 'black'
-            }
-          }
-        }
-      })
-      liquidPlot.render()
+    init() {
+      this.drawLine()
+      this.drawLiquid()
+      this.drawBox()
     }
+
   }
 }
 </script>

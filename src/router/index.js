@@ -155,13 +155,13 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/g2-plot/index',
     // alwaysShow: true,
-    name: 'G2Plot',
+    name: 'Chart',
     children: [
       {
         path: 'index',
         component: () => import('@/views/g2-plot/index.vue'),
         name: 'G2Plot',
-        meta: { title: 'G2Plot' }
+        meta: { title: 'G2Plot', icon: 'zip' }
       }
     ]
   },
