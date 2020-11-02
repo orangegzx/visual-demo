@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-10-30 16:08:19
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-11-02 16:17:13
+ * @LastEditTime: 2020-11-02 16:33:09
 -->
 <template>
   <el-row>
@@ -11,6 +11,11 @@
     <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
       <span class="title">仪表盘</span>
       <div id="dashboardCtn" class="item-chart" />
+    </el-col>
+    <!-- 仪表盘 -->
+    <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
+      <span class="title">仪表盘</span>
+      <div id="dashboardCtn2" class="item-chart" />
     </el-col>
     <!-- 环图 -->
     <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
@@ -82,6 +87,7 @@ export default {
   methods: {
     init() {
       this.drawDashboard()
+      this.drawDashboard2()
       this.drawRing()
       this.drawRose()
       this.drawPie()
