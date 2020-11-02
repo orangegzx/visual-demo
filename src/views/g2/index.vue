@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-10-30 16:08:19
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-10-30 18:18:44
+ * @LastEditTime: 2020-11-02 15:21:56
 -->
 <template>
   <el-row>
@@ -11,6 +11,11 @@
     <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
       <span class="title">仪表盘</span>
       <div id="dashboardCtn" class="item-chart" />
+    </el-col>
+    <!-- 环图 -->
+    <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
+      <span class="title">环图</span>
+      <div id="ringCtn" class="item-chart" />
     </el-col>
     <!-- 南丁格尔玫瑰图 -->
     <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
@@ -21,6 +26,11 @@
     <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
       <span class="title">嵌套饼图</span>
       <div id="pieCtn" class="item-chart" />
+    </el-col>
+    <!-- 玉环图 -->
+    <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
+      <span class="title">玉环图</span>
+      <div id="yuhuanCtn" class="item-chart" />
     </el-col>
     <!-- 气泡图 -->
     <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
@@ -67,8 +77,10 @@ export default {
   methods: {
     init() {
       this.drawDashboard()
+      this.drawRing()
       this.drawRose()
       this.drawPie()
+      this.drawYuhuan()
       this.drawBubble()
       this.drawBaseFunnel()
       this.drawPyramidFunnel()

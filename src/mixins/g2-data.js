@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-10-30 15:10:15
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-10-30 18:14:57
+ * @LastEditTime: 2020-11-02 15:20:04
  */
 // import { MAP_DATA } from '@/utils/map-date'
 
@@ -25,6 +25,14 @@ export default {
         { year: '2011', population: 42.5 },
         { year: '2012', population: 30.3 }
       ],
+      // 环图
+      ringData: [
+        { item: '事例一', count: 40, percent: 0.4 },
+        { item: '事例二', count: 21, percent: 0.21 },
+        { item: '事例三', count: 17, percent: 0.17 },
+        { item: '事例四', count: 13, percent: 0.13 },
+        { item: '事例五', count: 9, percent: 0.09 }
+      ],
       // 嵌套饼图
       pieData: [
         { value: 251, type: '大事例一', name: '子事例一' },
@@ -33,6 +41,17 @@ export default {
         { value: 434, type: '大事例二', name: '子事例四' },
         { value: 335, type: '大事例三', name: '子事例五' },
         { value: 250, type: '大事例三', name: '子事例六' }
+      ],
+      // 玉环图
+      yuhuanData: [
+        { question: '问题 1', percent: 0.21 },
+        { question: '问题 2', percent: 0.4 },
+        { question: '问题 3', percent: 0.49 },
+        { question: '问题 4', percent: 0.52 },
+        { question: '问题 5', percent: 0.53 },
+        { question: '问题 6', percent: 0.84 },
+        { question: '问题 7', percent: 1.0 },
+        { question: '问题 8', percent: 1.2 }
       ],
       // 气泡
       bubbleData: [

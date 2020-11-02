@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-10-30 15:10:15
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-10-30 18:19:43
+ * @LastEditTime: 2020-11-02 15:21:47
  */
 import Data from '@/mixins/g2-data'
 import { MAP_DATA } from '@/utils/map-date'
@@ -134,6 +134,87 @@ export default {
       })
       chart.render()
     },
+    // 环图
+    drawRing() {
+      const chart = new Chart({
+        container: 'ringCtn',
+        autoFit: true,
+        height: 500
+      })
+      chart.data(this.ringData)
+      chart.scale('percent', {
+        formatter: (val) => {
+          val = val * 100 + '%'
+          return val
+        }
+      })
+      chart.coordinate('theta', {
+        radius: 0.75,
+        innerRadius: 0.6
+      })
+      chart.tooltip({
+        showTitle: false,
+        showMarkers: false,
+        itemTpl: '<li class="g2-tooltip-list-item"><span style="background-color:{color};" class="g2-tooltip-marker"></span>{name}: {value}</li>'
+      })
+      // 辅助文本
+      chart
+        .annotation()
+        .text({
+          position: ['50%', '50%'],
+          content: '主机',
+          style: {
+            fontSize: 14,
+            fill: '#8c8c8c',
+            textAlign: 'center'
+          },
+          offsetY: -20
+        })
+        .text({
+          position: ['50%', '50%'],
+          content: '200',
+          style: {
+            fontSize: 20,
+            fill: '#8c8c8c',
+            textAlign: 'center'
+          },
+          offsetX: -10,
+          offsetY: 20
+        })
+        .text({
+          position: ['50%', '50%'],
+          content: '台',
+          style: {
+            fontSize: 14,
+            fill: '#8c8c8c',
+            textAlign: 'center'
+          },
+          offsetY: 20,
+          offsetX: 20
+        })
+      chart
+        .interval()
+        .adjust('stack')
+        .position('percent')
+        .color('item')
+        .label('percent', (percent) => {
+          return {
+            content: (data) => {
+              return `${data.item}: ${percent * 100}%`
+            }
+          }
+        })
+        .tooltip('item*percent', (item, percent) => {
+          percent = percent * 100 + '%'
+          return {
+            name: item,
+            value: percent
+          }
+        })
+
+      chart.interaction('element-active')
+      chart.render()
+    },
     // 玫瑰图
     drawRose() {
       const chart = new Chart({
@@ -254,6 +335,60 @@ export default {
           stroke: '#fff'
         })
       chart.interaction('element-highlight')
+      chart.render()
+    },
+
+    // 玉环图
+    drawYuhuan() {
+      const chart = new Chart({
+        container: 'yuhuanCtn',
+        autoFit: true,
+        height: 500
+      })
+
+      chart.data(this.yuhuanData)
+
+      chart.scale('percent', {
+        min: 0,
+        max: 2
+      })
+
+      chart.tooltip({
+        title: 'question',
+        showMarkers: false
+      })
+
+      chart.legend(false)
+      chart.axis('question', {
+        grid: null,
+        tickLine: null,
+        line: null,
+        label: {
+          style: {
+            fill: '#595959'
+          }
+        }
+      })
+
+      chart.coordinate('polar', { innerRadius: 0.1 }).transpose()
+
+      chart
+        .interval()
+        .position('question*percent')
+        .color('percent', '#BAE7FF-#1890FF-#0050B3')
+        .tooltip('percent', (val) => {
+          return {
+            name: '占比',
+            value: val * 100 + '%'
+          }
+        })
+        .label('percent', {
+          offset: -2,
+          content: (data) => {
+            return data.percent * 100 + '%'
+          }
+        })
+      chart.interaction('element-active')
       chart.render()
     },
 
