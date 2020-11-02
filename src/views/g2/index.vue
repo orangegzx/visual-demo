@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-10-30 16:08:19
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-11-02 16:52:23
+ * @LastEditTime: 2020-11-02 17:42:52
 -->
 <template>
   <el-row>
@@ -16,6 +16,11 @@
     <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
       <span class="title">仪表盘</span>
       <div id="dashboardCtn2" class="item-chart" />
+    </el-col>
+    <!-- 时间条形图 -->
+    <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
+      <span class="title">时间条形图</span>
+      <div id="timeBarCtn" class="item-chart" />
     </el-col>
     <!-- 环图 -->
     <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
@@ -98,6 +103,7 @@ export default {
     init() {
       this.drawDashboard()
       this.drawDashboard2()
+      this.drawTimeBar()
       this.drawRing()
       this.drawRose()
       this.drawPie()

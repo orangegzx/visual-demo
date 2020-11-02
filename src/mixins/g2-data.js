@@ -3,13 +3,28 @@
  * @Descripttion:
  * @Date: 2020-10-30 15:10:15
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-11-02 16:36:49
+ * @LastEditTime: 2020-11-02 17:39:36
  */
 // import { MAP_DATA } from '@/utils/map-date'
 
 export default {
   data() {
     return {
+      // 时间条形图
+      timeBarData: [
+        { task: 'task0', startTime: '2018-04-18 01:17:12', endTime: '2018-04-18 01:19:10', status: 0 },
+        { task: 'task1', startTime: '2018-04-18 01:18:15', endTime: '2018-04-18 01:19:20', status: 0 },
+        { task: 'task2', startTime: '2018-04-18 02:11:32', endTime: '2018-04-18 02:18:50', status: 0 },
+        { task: 'task3', startTime: '2018-04-18 02:18:50', endTime: '2018-04-18 03:16:38', status: 0 },
+        { task: 'task4', startTime: '2018-04-18 02:19:48', endTime: '2018-04-18 02:21:57', status: 0 },
+        { task: 'task5', startTime: '2018-04-18 03:16:38', endTime: '2018-04-18 03:19:38', status: 1 },
+        { task: 'task6', startTime: '2018-04-18 03:19:38', endTime: '2018-04-18 03:27:49', status: 0 },
+        { task: 'task7', startTime: '2018-04-18 07:29:37', endTime: '2018-04-18 07:33:01', status: 0 },
+        { task: 'task8', startTime: '2018-04-18 03:27:49', endTime: '2018-04-18 04:26:05', status: 0 },
+        { task: 'task9', startTime: '2018-04-18 04:26:05', endTime: '2018-04-18 06:06:36', status: 0 },
+        { task: 'task10', startTime: '2018-04-18 06:06:36', endTime: '2018-04-18 06:15:15', status: 0 },
+        { task: 'task11', startTime: '2018-04-18 03:27:49', endTime: '2018-04-18 03:34:50', status: 0 }
+      ],
       // 玫瑰图
       roseData: [
         { year: '2001', population: 41.8 },

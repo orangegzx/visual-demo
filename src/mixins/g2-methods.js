@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-10-30 15:10:15
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-11-02 16:41:46
+ * @LastEditTime: 2020-11-02 17:42:15
  */
 import Data from '@/mixins/g2-data'
 import { MAP_DATA } from '@/utils/map-date'
@@ -264,6 +264,44 @@ export default {
 
       chart.render()
     },
+
+    // 时间条形图
+    drawTimeBar() {
+      const values = ['运行成功', '运行失败']
+      this.timeBarData.forEach((obj) => {
+        obj.range = [obj.startTime, obj.endTime]
+        obj.status = values[obj.status]
+      })
+
+      const chart = new Chart({
+        container: 'timeBarCtn',
+        autoFit: true,
+        height: 500
+      })
+
+      chart.data(this.timeBarData)
+
+      chart
+        .coordinate()
+        .transpose()
+        .scale(1, -1)
+
+      chart.tooltip({
+        showMarkers: false
+      })
+      chart.interaction('element-active')
+      chart
+        .interval()
+        .position('task*range')
+        .color('status', ['#2FC25B', '#F04864'])
+        .animate({
+          appear: {
+            animation: 'scale-in-x'
+          }
+        })
+      chart.render()
+    },
+
     // 环图
     drawRing() {
       const chart = new Chart({
