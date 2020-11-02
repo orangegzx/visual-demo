@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-10-30 16:08:19
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-11-02 15:21:56
+ * @LastEditTime: 2020-11-02 16:17:13
 -->
 <template>
   <el-row>
@@ -57,6 +57,11 @@
       <span class="title">关系图</span>
       <div id="relationCtn" class="item-chart" />
     </el-col>
+    <!-- 双轴图 -->
+    <el-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24" class="item item-map">
+      <span class="title">双轴图</span>
+      <div id="dualAxisCtn" class="item-chart" />
+    </el-col>
   </el-row>
 </template>
 
@@ -86,6 +91,7 @@ export default {
       this.drawPyramidFunnel()
       this.drawMap()
       this.drawRelation()
+      this.drawDualAxis()
     }
 
   }

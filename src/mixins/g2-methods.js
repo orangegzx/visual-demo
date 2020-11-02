@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-10-30 15:10:15
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-11-02 15:21:47
+ * @LastEditTime: 2020-11-02 16:27:06
  */
 import Data from '@/mixins/g2-data'
 import { MAP_DATA } from '@/utils/map-date'
@@ -754,6 +754,73 @@ export default {
         })
       chart.interaction('element-active')
 
+      chart.render()
+    },
+
+    // 双轴图
+    drawDualAxis() {
+      const chart = new Chart({
+        container: 'dualAxisCtn',
+        autoFit: true,
+        height: 500
+      })
+      chart.data(this.dualAxisData)
+      chart.scale({
+        people: {
+          min: 0,
+          max: 10
+        },
+        waiting: {
+          min: 0,
+          max: 10
+        }
+      })
+      chart.legend({
+        custom: true,
+        items: [
+          { value: 'waiting', name: '等候', marker: { symbol: 'square', style: { fill: '#3182bd', r: 5 }}},
+          { value: 'people', name: '人数', marker: { symbol: 'hyphen', style: { stroke: '#fdae6b', r: 5, lineWidth: 3 }}}
+        ]
+      })
+      chart.axis('people', {
+        grid: null,
+        title: {
+          style: {
+            fill: '#fdae6b'
+          }
+        },
+        label: {
+          style: {
+            fill: '#fdae6b'
+          }
+        }
+      })
+      chart.axis('waiting', {
+        title: {
+          style: {
+            fill: 'blue'
+          }
+        }
+      })
+      chart.tooltip({
+        shared: true
+      })
+      chart.interval()
+        .position('time*waiting')
+        .color('#3182bd')
+      chart.line()
+        .position('time*people')
+        .color('#fdae6b')
+        .size(3)
+        .shape('smooth')
+      chart.point()
+        .position('time*people')
+        .color('#fdae6b')
+        .size(3)
+        .shape('circle')
+
+      chart.interaction('active-region')
+      chart.removeInteraction('legend-filter') // 自定义图例，移除默认的分类图例筛选交互
       chart.render()
     }
 

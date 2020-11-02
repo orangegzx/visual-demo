@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-10-30 15:10:15
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-11-02 15:20:04
+ * @LastEditTime: 2020-11-02 16:14:24
  */
 // import { MAP_DATA } from '@/utils/map-date'
 
@@ -534,7 +534,18 @@ export default {
           { name: '分类 19', value: 28 },
           { name: '分类 20', value: 16 }
         ]
-      }
+      },
+
+      // 双轴图
+      dualAxisData: [
+        { time: '10:10', call: 4, waiting: 2, people: 2 },
+        { time: '10:15', call: 2, waiting: 6, people: 3 },
+        { time: '10:20', call: 13, waiting: 2, people: 5 },
+        { time: '10:25', call: 9, waiting: 9, people: 1 },
+        { time: '10:30', call: 5, waiting: 2, people: 3 },
+        { time: '10:35', call: 8, waiting: 2, people: 1 },
+        { time: '10:40', call: 13, waiting: 1, people: 2 }
+      ]
 
     }
   }
