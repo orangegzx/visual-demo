@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-10-30 15:10:15
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-11-02 16:32:57
+ * @LastEditTime: 2020-11-02 16:41:46
  */
 import Data from '@/mixins/g2-data'
 import { MAP_DATA } from '@/utils/map-date'
@@ -519,6 +519,36 @@ export default {
           }
         })
       chart.interaction('element-active')
+      chart.render()
+    },
+
+    // 多条阶梯折线图
+    drawStep() {
+      const chart = new Chart({
+        container: 'stepLineCtn',
+        autoFit: true,
+        height: 500
+      })
+
+      chart.data(this.stepLineData)
+
+      chart.scale('month', {
+        range: [0, 1]
+      })
+      chart.scale('value', {
+        nice: true
+      })
+
+      chart.tooltip({
+        showCrosshairs: true
+      })
+
+      chart
+        .line()
+        .position('month*value')
+        .shape('hv')
+        .color('key')
+
       chart.render()
     },
 

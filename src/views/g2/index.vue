@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-10-30 16:08:19
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-11-02 16:33:09
+ * @LastEditTime: 2020-11-02 16:52:23
 -->
 <template>
   <el-row>
@@ -36,6 +36,16 @@
     <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
       <span class="title">玉环图</span>
       <div id="yuhuanCtn" class="item-chart" />
+    </el-col>
+    <!-- 多条阶梯折线图 -->
+    <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
+      <el-tooltip
+        effect="dark"
+        content="echart区别：Echart--通过series中定义多个对象来定义多条线，定义几个对象则有几条线；G2--数组数据中通过key来定义是哪条折线，key有几种类别则有几条线"
+        placement="top"
+      ><span class="title">多条阶梯图</span>
+      </el-tooltip>
+      <div id="stepLineCtn" class="item-chart" />
     </el-col>
     <!-- 气泡图 -->
     <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
@@ -92,6 +102,7 @@ export default {
       this.drawRose()
       this.drawPie()
       this.drawYuhuan()
+      this.drawStep()
       this.drawBubble()
       this.drawBaseFunnel()
       this.drawPyramidFunnel()
