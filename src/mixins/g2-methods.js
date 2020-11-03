@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-10-30 15:10:15
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-11-02 17:42:15
+ * @LastEditTime: 2020-11-03 11:22:34
  */
 import Data from '@/mixins/g2-data'
 import { MAP_DATA } from '@/utils/map-date'
@@ -262,6 +262,32 @@ export default {
         offsetY: 15
       })
 
+      chart.render()
+    },
+
+    // 堆叠柱状图
+    drawHistogram() {
+      const chart = new Chart({
+        container: 'histogramCtn',
+        autoFit: true
+      })
+
+      chart.data(this.histogramData)
+      chart.scale('月均降雨量', {
+        nice: true
+      })
+      chart.tooltip({
+        shared: true,
+        showMarkers: false
+      })
+
+      chart
+        .interval()
+        .position('月份*月均降雨量')
+        .color('name')
+        .adjust('stack')
+
+      chart.interaction('active-region')
       chart.render()
     },
 

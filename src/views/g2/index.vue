@@ -3,47 +3,52 @@
  * @Descripttion:
  * @Date: 2020-10-30 16:08:19
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-11-02 17:42:52
+ * @LastEditTime: 2020-11-03 11:21:22
 -->
 <template>
   <el-row>
     <!-- 仪表盘 -->
-    <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
+    <el-col :xl="8" :lg="12" :md="12" :sm="12" :xs="24" class="item">
       <span class="title">仪表盘</span>
       <div id="dashboardCtn" class="item-chart" />
     </el-col>
     <!-- 仪表盘 -->
-    <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
+    <el-col :xl="8" :lg="12" :md="12" :sm="12" :xs="24" class="item">
       <span class="title">仪表盘</span>
       <div id="dashboardCtn2" class="item-chart" />
     </el-col>
+    <!-- 堆叠柱状图 -->
+    <el-col :xl="8" :lg="12" :md="12" :sm="12" :xs="24" class="item">
+      <span class="title">堆叠柱状图</span>
+      <div id="histogramCtn" class="item-chart" />
+    </el-col>
     <!-- 时间条形图 -->
-    <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
+    <el-col :xl="8" :lg="12" :md="12" :sm="12" :xs="24" class="item">
       <span class="title">时间条形图</span>
       <div id="timeBarCtn" class="item-chart" />
     </el-col>
     <!-- 环图 -->
-    <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
+    <el-col :xl="8" :lg="12" :md="12" :sm="12" :xs="24" class="item">
       <span class="title">环图</span>
       <div id="ringCtn" class="item-chart" />
     </el-col>
     <!-- 南丁格尔玫瑰图 -->
-    <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
+    <el-col :xl="8" :lg="12" :md="12" :sm="12" :xs="24" class="item">
       <span class="title">玫瑰图</span>
       <div id="roseCtn" class="item-chart" />
     </el-col>
     <!-- 嵌套饼图 -->
-    <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
+    <el-col :xl="8" :lg="12" :md="12" :sm="12" :xs="24" class="item">
       <span class="title">嵌套饼图</span>
       <div id="pieCtn" class="item-chart" />
     </el-col>
     <!-- 玉环图 -->
-    <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
+    <el-col :xl="8" :lg="12" :md="12" :sm="12" :xs="24" class="item">
       <span class="title">玉环图</span>
       <div id="yuhuanCtn" class="item-chart" />
     </el-col>
     <!-- 多条阶梯折线图 -->
-    <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
+    <el-col :xl="8" :lg="12" :md="12" :sm="12" :xs="24" class="item">
       <el-tooltip
         effect="dark"
         content="echart区别：Echart--通过series中定义多个对象来定义多条线，定义几个对象则有几条线；G2--数组数据中通过key来定义是哪条折线，key有几种类别则有几条线"
@@ -53,32 +58,32 @@
       <div id="stepLineCtn" class="item-chart" />
     </el-col>
     <!-- 气泡图 -->
-    <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
+    <el-col :xl="8" :lg="12" :md="12" :sm="12" :xs="24" class="item">
       <span class="title">气泡图</span>
       <div id="bubbleCtn" class="item-chart" />
     </el-col>
     <!-- 基础漏斗图 -->
-    <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
+    <el-col :xl="8" :lg="12" :md="12" :sm="12" :xs="24" class="item">
       <span class="title">基础漏斗图</span>
       <div id="baseFunnelCtn" class="item-chart" />
     </el-col>
     <!-- 尖端漏斗图 -->
-    <el-col :xl="4" :lg="4" :md="8" :sm="12" :xs="24" class="item">
+    <el-col :xl="8" :lg="12" :md="12" :sm="12" :xs="24" class="item">
       <span class="title">金字塔漏斗图</span>
       <div id="pyramidFunnelCtn" class="item-chart" />
     </el-col>
     <!-- 地图 -->
-    <el-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24" class="item item-map">
+    <el-col :xl="12" :lg="12" :md="24" :sm="24" :xs="24" class="item item-map">
       <span class="title">地图</span>
       <div id="mapCtn" class="item-chart" />
     </el-col>
     <!-- 关系图 -->
-    <el-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24" class="item item-map">
+    <el-col :xl="12" :lg="12" :md="24" :sm="24" :xs="24" class="item item-map">
       <span class="title">关系图</span>
       <div id="relationCtn" class="item-chart" />
     </el-col>
     <!-- 双轴图 -->
-    <el-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24" class="item item-map">
+    <el-col :xl="12" :lg="12" :md="24" :sm="24" :xs="24" class="item item-map">
       <span class="title">双轴图</span>
       <div id="dualAxisCtn" class="item-chart" />
     </el-col>
@@ -103,6 +108,7 @@ export default {
     init() {
       this.drawDashboard()
       this.drawDashboard2()
+      this.drawHistogram()
       this.drawTimeBar()
       this.drawRing()
       this.drawRose()
@@ -124,7 +130,7 @@ export default {
 <style lang="scss" scoped>
 .item {
   height: 400px;
-  width: 600px;
+  // width: 600px;
   padding: 20px 0 30px 0;
   text-align: center;
   border-bottom: solid 1px #e2e2e2;

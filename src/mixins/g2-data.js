@@ -3,13 +3,32 @@
  * @Descripttion:
  * @Date: 2020-10-30 15:10:15
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-11-02 17:39:36
+ * @LastEditTime: 2020-11-03 11:26:52
  */
 // import { MAP_DATA } from '@/utils/map-date'
 
 export default {
   data() {
     return {
+      // 堆叠柱状图
+      histogramData: [
+        { name: '伦敦', 月份: 'Jan.', 月均降雨量: 18.9 },
+        { name: '伦敦', 月份: 'Feb.', 月均降雨量: 28.8 },
+        { name: '伦敦', 月份: 'Mar.', 月均降雨量: 39.3 },
+        { name: '伦敦', 月份: 'Apr.', 月均降雨量: 81.4 },
+        { name: '伦敦', 月份: 'May', 月均降雨量: 47 },
+        { name: '伦敦', 月份: 'Jun.', 月均降雨量: 20.3 },
+        { name: '伦敦', 月份: 'Jul.', 月均降雨量: 24 },
+        { name: '伦敦', 月份: 'Aug.', 月均降雨量: 35.6 },
+        { name: '柏林', 月份: 'Jan.', 月均降雨量: 12.4 },
+        { name: '柏林', 月份: 'Feb.', 月均降雨量: 23.2 },
+        { name: '柏林', 月份: 'Mar.', 月均降雨量: 34.5 },
+        { name: '柏林', 月份: 'Apr.', 月均降雨量: 99.7 },
+        { name: '柏林', 月份: 'May', 月均降雨量: 52.6 },
+        { name: '柏林', 月份: 'Jun.', 月均降雨量: 35.5 },
+        { name: '柏林', 月份: 'Jul.', 月均降雨量: 37.4 },
+        { name: '柏林', 月份: 'Aug.', 月均降雨量: 42.4 }
+      ],
       // 时间条形图
       timeBarData: [
         { task: 'task0', startTime: '2018-04-18 01:17:12', endTime: '2018-04-18 01:19:10', status: 0 },
