@@ -1,5 +1,5 @@
 {
-    "edges": [
+  "edges": [
         {
             "source": "bookinfo/productpage/v1",
             "target": "bookinfo/reviews/v1",

@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-09 14:31:39
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-10 15:38:08
+ * @LastEditTime: 2020-12-10 18:47:26
 -->
 <template>
   <article class="tuo-pu">
@@ -13,25 +13,52 @@
 </template>
 
 <script>
-// 请求requests速率，错误速率errors相加；平均avg_latency延时取平均数
-// import _ from 'lodash'
+import _ from 'lodash'
 // import { TP_DATA, EGES } from '@/utils/data'
-import { EGES } from '@/utils/data'
-import { zipData } from '@/utils/zip-data'
+import { mapActions, mapState, mapGetters, mapMutations } from 'vuex'
+// import { zipData,getNodeSoure } from '@/utils/zip-data'
 
 export default {
   name: 'Tuopu',
   data() {
     return {
-      test: ''
+      test: '123'
     }
   },
+  computed: {
+    ...mapState('zipData', [
+      'allUnzipData',
+      'nodeSourceMap',
+      'sameAliasObj'
+    ]),
+    ...mapGetters('zipData', ['getterAllUnzipNodeList'])
+  },
   created() {
-    this.getSameLineRate(EGES)
-    zipData()
+    this.getAllUnzipDate()
+    // this.getSameLineRate(EGES)
+    // zipData(TP_DATA) // 压缩数据
   },
   methods: {
-    /** 查询数组重复值的索引们---去重的同事，查看重复值的所用
+
+    ...mapActions('zipData', ['GetAllUnzipData']),
+    ...mapMutations('zipData', ['SET_SAME_ALIAS_OBJ']),
+
+    /** 1.获取全解压数据
+     * 1.1处理每个版本节点与对应服务级别关系
+     * 1.2 所有节点同来源的节点集合（初始化数据即全压缩）
+     * */
+    getAllUnzipDate() {
+      this.GetAllUnzipData().then((res) => {
+        console.log('getterAllUnzipNodeList', this.getterAllUnzipNodeList)
+        console.log('nodeSourceMap', this.nodeSourceMap)
+        // 设置每个服务级别的版本集合
+        const same_alias_obj = _.groupBy(this.getterAllUnzipNodeList, 'alias')
+        this.SET_SAME_ALIAS_OBJ(same_alias_obj)
+        console.log('same alias obj:', this.sameAliasObj)
+      })
+    },
+
+    /** 1.1 查询数组重复值的索引们---去重的同事，查看重复值的所用
      *  查询起终点（起终点对应的id所属来源都已处理好）的来源一致的重复数据的索引：多个/一个
     */
     getSameSTLineIndex(arr) {
@@ -64,7 +91,7 @@ export default {
     },
 
     /**
-     * 求中数据的相同type时，二者rate相加,平均速率求平均值
+     * 1.2 求中数据的相同type时，二者rate相加,平均速率求平均值
      * @param arr 需要合并的多条线的traffics字段数据的集合
      * 1，先全部求和，再进行筛选出平均率计算平均值
      *  */
@@ -88,7 +115,7 @@ export default {
       return result
     },
 
-    // 计算全部压缩后的线条的流量（已处理线起点和终点的节点是否是需要压缩）
+    // 1 计算全部压缩后的线条的流量（已处理线起点和终点的节点是否是需要压缩）
     getSameLineRate(egesList) {
       // 计算需要合并的线条
       const new_line_arr = this.getSameSTLineIndex(egesList)

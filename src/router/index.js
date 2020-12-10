@@ -203,7 +203,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'index',
-        component: () => import('@/views/tuopu/index'),
+        component: () => import('@/views/tuopu/index.vue'),
         name: 'Tuopu',
         meta: { title: 'test', icon: 'clipboard' }
       }
