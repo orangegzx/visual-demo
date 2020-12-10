@@ -1,0 +1,275 @@
+{
+    "edges": [
+        {
+            "source": "bookinfo/productpage/v1",
+            "target": "bookinfo/reviews/v1",
+            "traffics": [
+                {
+                    "type": "requests",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 10
+                },
+                {
+                    "type": "errors",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 2
+                },
+                {
+                    "type": "avg_latency",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 20
+                }
+            ]
+        },
+        {
+            "source": "bookinfo/productpage/v1",
+            "target": "bookinfo/reviews/v2",
+            "traffics": [
+                {
+                    "type": "requests",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 5
+                },
+                {
+                    "type": "errors",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 1
+                },
+                {
+                    "type": "avg_latency",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 10
+                }
+            ]
+        },
+        {
+            "source": "bookinfo/productpage/v1",
+            "target": "bookinfo/details/v1",
+            "traffics": [
+                {
+                    "type": "requests",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 0
+                },
+                {
+                    "type": "errors",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 0
+                },
+                {
+                    "type": "avg_latency",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 0
+                }
+            ]
+        },
+        {
+            "source": "bookinfo/productpage/v1",
+            "target": "bookinfo/details/v2",
+            "traffics": [
+                {
+                    "type": "requests",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 0
+                },
+                {
+                    "type": "errors",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 0
+                },
+                {
+                    "type": "avg_latency",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 0
+                }
+            ]
+        },
+        {
+            "source": "bookinfo/details/v1",
+            "target": "bookinfo/reviews/v2",
+            "traffics": [
+                {
+                    "type": "requests",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 10
+                },
+                {
+                    "type": "errors",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 2
+                },
+                {
+                    "type": "avg_latency",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 20
+                }
+            ]
+        }
+    ],
+    "nodes": [
+        {
+            "id": "bookinfo/reviews/v1",
+            "type": "",
+            "namespace": "bookinfo",
+            "name": "reviews",
+            "app": "bookinfo",
+            "version": "v1",
+            "traffics": [
+                {
+                    "type": "requests",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 10
+                },
+                {
+                    "type": "errors",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 2
+                },
+                {
+                    "type": "avg_latency",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 20
+                }
+            ]
+        },
+        {
+            "id": "bookinfo/reviews/v2",
+            "type": "",
+            "namespace": "bookinfo",
+            "name": "reviews",
+            "app": "bookinfo",
+            "version": "v2",
+            "traffics": [
+                {
+                    "type": "requests",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 15
+                },
+                {
+                    "type": "errors",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 3
+                },
+                {
+                    "type": "avg_latency",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 15
+                }
+            ]
+        },
+        {
+            "id": "bookinfo/productpage/v1",
+            "type": "",
+            "namespace": "bookinfo",
+            "name": "productpage",
+            "app": "bookinfo",
+            "version": "v1",
+            "traffics": [
+                {
+                    "type": "requests",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 0
+                },
+                {
+                    "type": "errors",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 0
+                },
+                {
+                    "type": "avg_latency",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 0
+                }
+            ]
+        },
+        {
+            "id": "bookinfo/details/v1",
+            "type": "",
+            "namespace": "bookinfo",
+            "name": "details",
+            "app": "bookinfo",
+            "version": "v1",
+            "traffics": [
+                {
+                    "type": "requests",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 0
+                },
+                {
+                    "type": "errors",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 0
+                },
+                {
+                    "type": "avg_latency",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 0
+                }
+            ]
+        },
+        {
+            "id": "bookinfo/details/v2",
+            "type": "",
+            "namespace": "bookinfo",
+            "name": "details",
+            "app": "bookinfo",
+            "version": "v2",
+            "traffics": [
+                {
+                    "type": "requests",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 0
+                },
+                {
+                    "type": "errors",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 0
+                },
+                {
+                    "type": "avg_latency",
+                    "protocol": "http",
+                    "direction": "in",
+                    "rate": 0
+                }
+            ]
+        },
+        {
+            "id": "bookinfo/ratings",
+            "type": "",
+            "namespace": "bookinfo",
+            "version": "v1",
+            "name": "ratings",
+            "app": "bookinfo",
+            "traffics": null
+        }
+    ]
+}

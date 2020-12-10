@@ -197,6 +197,18 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/test',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/tuopu/index'),
+        name: 'Tuopu',
+        meta: { title: 'test', icon: 'clipboard' }
+      }
+    ]
+  },
 
   // {
   //   path: '/clipboard',
