@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-10 15:28:06
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-11 12:33:01
+ * @LastEditTime: 2020-12-11 12:41:09
  */
 import _ from 'lodash'
 
@@ -66,12 +66,11 @@ export function getSameSTLineIndex(arr) {
   return same_data_arr
 }
 
-/**
- * 1.2 流量等数据的合并计算
- * 数据的相同type时，二者rate相加,平均速率求平均值
- * @param arr 需要合并的多条线的traffics字段数据的集合
- * 1，先全部求和，再进行筛选出平均率计算平均值
- *  */
+/** 流量的合并计算
+ * @param {Array} arr 多条线的traffics字段数据的集合
+ * desc：数据的相同type时，二者rate相加,平均速率求平均值
+ *      先全部求和，再进行筛选出平均率计算平均值
+ */
 export function getRateSum(arr) {
   // 1.全部求和
   const result = Object.values(arr.reduce((acc, { type, protocol, direction, rate }) => {
@@ -92,7 +91,9 @@ export function getRateSum(arr) {
   return result
 }
 
-// 1 计算全部压缩后的线条的流量（已处理线起点和终点的节点是否是需要压缩）
+/** 全压缩-线条合并: 包括线条的去重、流量计算
+ * @param {Array} egesList 已处理的线条，即来源相同，终点相同的线
+ */
 export function getSameLineRate(egesList) {
   // 计算需要合并的线条
   const new_line_arr = this.getSameSTLineIndex(egesList)
