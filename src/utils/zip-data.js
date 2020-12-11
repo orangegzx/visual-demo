@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-10 15:28:06
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-10 18:18:47
+ * @LastEditTime: 2020-12-11 11:14:36
  */
 
 // 判断变量类型
@@ -39,13 +39,16 @@ export function getNodeSoure(mapData, nodeId) {
  */
 export function zipData(sourceData, unZipNode = []) {
   console.log(variableType('aaa'), sourceData, unZipNode)
-  if (variableType(sourceData) !== 'obejct') return {}
+  if (variableType(sourceData) !== 'object') return {}
   if (variableType(unZipNode) !== 'array') return []
   if (unZipNode.length === 0) {
     // 全压缩
+    console.log(1)
   } else if (unZipNode.length !== 0) {
+    console.log(0)
     // 部分压缩
   } else {
+    console.log('01')
     // 全解压
   }
 }

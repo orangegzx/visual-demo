@@ -3,11 +3,12 @@
  * @Descripttion:
  * @Date: 2020-12-10 17:13:55
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-11 10:55:36
+ * @LastEditTime: 2020-12-11 11:25:55
  */
 import { TP_DATA } from '@/utils/data' // mock数据
 import { NodeModel } from '@/zip-data.js/data-model'
 import _ from 'lodash'
+import { zipData } from '@/utils/zip-data'
 
 const state = {
   allUnzipData: {},
@@ -48,8 +49,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       // 1. 注明每个节点-版本级别的来源----方便3根据节点某个字段来做分组处理
       const node_list = TP_DATA && TP_DATA.nodes ? TP_DATA.nodes.map(node => new NodeModel(node)) : []
-      commit('SET_UNZIP_DATA', { nodes: node_list, edges: TP_DATA.edges })
-      // console.log('全解压data：', state.allUnzipData)
+      // commit('SET_UNZIP_DATA', { nodes: node_list, edges: TP_DATA.edges })
       // 2. 各个节点（版本）的来源（服务级别） 的对应关系
       const map_list = new Map()
       map_list.set('default', 'null')
@@ -61,7 +61,15 @@ const actions = {
       // 3. 节点：根据服务级别分组为相同服务级别的集合
       const same_alias_obj = _.groupBy(node_list, 'alias')
       commit('SET_SAME_ALIAS_OBJ', same_alias_obj)
+      commit('SET_UNZIP_DATA', {
+        nodes: node_list,
+        edges: TP_DATA.edges,
+        sameOriginNodes: same_alias_obj // 方便压缩数据时使用，避免每次压缩时都计算一次。
+      })
+      // console.log('全解压data：', state.allUnzipData)
       // console.log('SAME_ALIAS_OBJ:', state.sameAliasObj)
+      //  4. 全部压缩--初始化数据
+      zipData(state.allUnzipData)
       resolve(TP_DATA)
     })
   }

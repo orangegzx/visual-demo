@@ -3,12 +3,11 @@
  * @Descripttion:
  * @Date: 2020-12-09 14:31:39
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-11 10:58:22
+ * @LastEditTime: 2020-12-11 11:10:38
 -->
 <template>
   <article class="tuo-pu">
-    test
-    <div>{{ test }}</div>
+    <div>allUnzipData</div>
   </article>
 </template>
 
@@ -16,7 +15,7 @@
 // import _ from 'lodash'
 // import { TP_DATA, EGES } from '@/utils/data'
 import { mapActions, mapState } from 'vuex'
-// import { zipData,getNodeSoure } from '@/utils/zip-data'
+// import { zipData } from '@/utils/zip-data'
 
 export default {
   name: 'Tuopu',
@@ -50,6 +49,7 @@ export default {
         console.log('全解压data：', this.allUnzipData)
         console.log('nodeSourceMap', this.nodeSourceMap)
         console.log('SAME_ALIAS_OBJ:', this.sameAliasObj)
+        // zipData(this.allUnzipData) // 全部压缩
       })
     },
 
