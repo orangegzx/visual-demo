@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-09 14:31:39
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-10 18:47:26
+ * @LastEditTime: 2020-12-11 10:58:22
 -->
 <template>
   <article class="tuo-pu">
@@ -13,9 +13,9 @@
 </template>
 
 <script>
-import _ from 'lodash'
+// import _ from 'lodash'
 // import { TP_DATA, EGES } from '@/utils/data'
-import { mapActions, mapState, mapGetters, mapMutations } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 // import { zipData,getNodeSoure } from '@/utils/zip-data'
 
 export default {
@@ -30,8 +30,7 @@ export default {
       'allUnzipData',
       'nodeSourceMap',
       'sameAliasObj'
-    ]),
-    ...mapGetters('zipData', ['getterAllUnzipNodeList'])
+    ])
   },
   created() {
     this.getAllUnzipDate()
@@ -41,7 +40,6 @@ export default {
   methods: {
 
     ...mapActions('zipData', ['GetAllUnzipData']),
-    ...mapMutations('zipData', ['SET_SAME_ALIAS_OBJ']),
 
     /** 1.获取全解压数据
      * 1.1处理每个版本节点与对应服务级别关系
@@ -49,12 +47,9 @@ export default {
      * */
     getAllUnzipDate() {
       this.GetAllUnzipData().then((res) => {
-        console.log('getterAllUnzipNodeList', this.getterAllUnzipNodeList)
+        console.log('全解压data：', this.allUnzipData)
         console.log('nodeSourceMap', this.nodeSourceMap)
-        // 设置每个服务级别的版本集合
-        const same_alias_obj = _.groupBy(this.getterAllUnzipNodeList, 'alias')
-        this.SET_SAME_ALIAS_OBJ(same_alias_obj)
-        console.log('same alias obj:', this.sameAliasObj)
+        console.log('SAME_ALIAS_OBJ:', this.sameAliasObj)
       })
     },
 

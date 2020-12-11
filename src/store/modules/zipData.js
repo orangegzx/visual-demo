@@ -3,10 +3,11 @@
  * @Descripttion:
  * @Date: 2020-12-10 17:13:55
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-10 18:40:45
+ * @LastEditTime: 2020-12-11 10:55:36
  */
 import { TP_DATA } from '@/utils/data' // mock数据
 import { NodeModel } from '@/zip-data.js/data-model'
+import _ from 'lodash'
 
 const state = {
   allUnzipData: {},
@@ -19,7 +20,6 @@ const state = {
 }
 
 const getters = {
-  getterAllUnzipNodeList: state => state.allUnzipData.nodes ? state.allUnzipData.nodes.map(item => new NodeModel(item)) : []
 }
 
 const mutations = {
@@ -46,17 +46,22 @@ const actions = {
    */
   GetAllUnzipData({ state, commit }) {
     return new Promise((resolve, reject) => {
-      console.log('TP_DATA', TP_DATA)
-      commit('SET_UNZIP_DATA', TP_DATA)
-      // 各个节点的来源
+      // 1. 注明每个节点-版本级别的来源----方便3根据节点某个字段来做分组处理
+      const node_list = TP_DATA && TP_DATA.nodes ? TP_DATA.nodes.map(node => new NodeModel(node)) : []
+      commit('SET_UNZIP_DATA', { nodes: node_list, edges: TP_DATA.edges })
+      // console.log('全解压data：', state.allUnzipData)
+      // 2. 各个节点（版本）的来源（服务级别） 的对应关系
       const map_list = new Map()
-      map_list.set('default', 'null') // 不在范围内的显示
-      // 节点压缩时：服务级别的id设置为`${node.namespace}/${node.name}`一致
+      map_list.set('default', 'null')
       TP_DATA.nodes.map(node => {
         map_list.set(node.id, `${node.namespace}/${node.name}`)
       })
       commit('SET_NODE_SOURCE', map_list)
-      // 3. 根据服务级别分组为相同服务级别的集合
+      // console.log('nodeSourceMap', state.nodeSourceMap)
+      // 3. 节点：根据服务级别分组为相同服务级别的集合
+      const same_alias_obj = _.groupBy(node_list, 'alias')
+      commit('SET_SAME_ALIAS_OBJ', same_alias_obj)
+      // console.log('SAME_ALIAS_OBJ:', state.sameAliasObj)
       resolve(TP_DATA)
     })
   }
