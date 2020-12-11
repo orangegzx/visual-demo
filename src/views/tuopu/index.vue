@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-09 14:31:39
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-11 17:20:57
+ * @LastEditTime: 2020-12-11 17:31:35
 -->
 <template>
   <article class="tuo-pu">
@@ -13,9 +13,7 @@
 
 <script>
 // import _ from 'lodash'
-// import { TP_DATA, EGES } from '@/utils/data'
 import { mapActions, mapState } from 'vuex'
-// import { zipData } from '@/utils/zip-data'
 
 export default {
   name: 'Tuopu',
@@ -33,8 +31,6 @@ export default {
   },
   created() {
     this.getAllUnzipDate()
-    // this.getSameLineRate(EGES)
-    // zipData(TP_DATA) // 压缩数据
   },
   methods: {
 
