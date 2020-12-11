@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-10 15:28:06
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-11 12:41:09
+ * @LastEditTime: 2020-12-11 15:20:24
  */
 import _ from 'lodash'
 
@@ -138,28 +138,34 @@ export function zipData(originData, unZipNode = []) {
       // 遍历所有相同来源的版本节点，判断服务级别是单节点还是多节点
       Object.values(originData.sameOriginNodes).map((node_list) => {
         if (Array.isArray(node_list) && node_list.length > 1) {
+          console.log('node_list', node_list)
+
           // 1.多版本
-          const traffics_arr = []
-          const n = {}
-          /** 遍历同源的所有节点，合并节点的流量的数据
-           * 合并同来源的版本节点为服务节点: node id =》服务级别id，verson置空
+          /** 计算节点合并流量
+           * 遍历同源的所有节点，合并节点的流量的数据
            *  */
+          const traffics_arr = []
           node_list.map(node => {
             traffics_arr.push(...node.traffics)
-            node.id = `${node.namespace}/${node.name}`
-            node.version = ''
-            node.traffics = [] // 置空流量
-            _.assign(n, node)
           })
-          n.traffics = getRateSum(traffics_arr) // 合并流量
-          new_node_list.push(n)
+          const node_traffics = getRateSum(traffics_arr) // 合并流量
+          // 根据alias取唯一,作为父节点。合并同来源的版本节点为服务节点
+          let serve_n = {}
+          serve_n = _.cloneDeep(node_list[0])
+          serve_n.versionList = node_list
+          serve_n.traffics = []
+          serve_n.id = serve_n.alias
+          serve_n.version = ''
+          serve_n.traffics = node_traffics
+          new_node_list.push(serve_n)
         } else {
           // 2.单版本：所有属性不变，id还是版本id
           new_node_list.push(node_list[0])
         }
       })
       result.nodes = new_node_list
-      console.log('result', result)
+    } else {
+      return
     }
   } else if (unZipNode.length !== 0) {
     console.log(0)

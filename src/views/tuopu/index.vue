@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-09 14:31:39
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-11 11:42:36
+ * @LastEditTime: 2020-12-11 14:28:02
 -->
 <template>
   <article class="tuo-pu">
@@ -49,7 +49,6 @@ export default {
         console.log('全解压data：', this.allUnzipData)
         console.log('nodeSourceMap', this.nodeSourceMap)
         console.log('SAME_ALIAS_OBJ:', this.sameAliasObj)
-        // zipData(this.allUnzipData) // 全部压缩
       })
     }
   }
