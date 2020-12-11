@@ -183,7 +183,7 @@ const TP_DATA = {
             "type": "errors",
             "protocol": "http",
             "direction": "in",
-            "rate": 1
+            "rate": 2
         },
         {
             "type": "avg_latency",
@@ -334,7 +334,7 @@ const TP_DATA = {
           "type": "avg_latency",
           "protocol": "http",
           "direction": "in",
-          "rate": 20
+          "rate": 5
         }
       ]
     }
@@ -410,19 +410,19 @@ const TP_DATA = {
           "type": "requests",
           "protocol": "http",
           "direction": "in",
-          "rate": 10
+          "rate": 8
         },
         {
           "type": "errors",
           "protocol": "http",
           "direction": "in",
-          "rate": 2
+          "rate": 1
         },
         {
           "type": "avg_latency",
           "protocol": "http",
           "direction": "in",
-          "rate": 20
+          "rate": 15
         }
       ]
     },
@@ -466,19 +466,19 @@ const TP_DATA = {
           "type": "requests",
           "protocol": "http",
           "direction": "in",
-          "rate": 15
+          "rate": 12
         },
         {
           "type": "errors",
           "protocol": "http",
           "direction": "in",
-          "rate": 3
+          "rate": 1
         },
         {
           "type": "avg_latency",
           "protocol": "http",
           "direction": "in",
-          "rate": 15
+          "rate": 10
         }
       ]
     },
@@ -522,19 +522,19 @@ const TP_DATA = {
           "type": "requests",
           "protocol": "http",
           "direction": "in",
-          "rate": 0
+          "rate": 1
         },
         {
           "type": "errors",
           "protocol": "http",
           "direction": "in",
-          "rate": 0
+          "rate": 2
         },
         {
           "type": "avg_latency",
           "protocol": "http",
           "direction": "in",
-          "rate": 0
+          "rate": 3
         }
       ]
     },
@@ -550,19 +550,19 @@ const TP_DATA = {
           "type": "requests",
           "protocol": "http",
           "direction": "in",
-          "rate": 0
+          "rate": 2
         },
         {
           "type": "errors",
           "protocol": "http",
           "direction": "in",
-          "rate": 0
+          "rate": 1
         },
         {
           "type": "avg_latency",
           "protocol": "http",
           "direction": "in",
-          "rate": 0
+          "rate": 3
         }
       ]
     }
