@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-09 14:31:39
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-11 14:28:02
+ * @LastEditTime: 2020-12-11 15:25:48
 -->
 <template>
   <article class="tuo-pu">
@@ -28,7 +28,7 @@ export default {
     ...mapState('zipData', [
       'allUnzipData',
       'nodeSourceMap',
-      'sameAliasObj'
+      'sameOriginObj'
     ])
   },
   created() {
@@ -48,7 +48,7 @@ export default {
       this.GetAllUnzipData().then((res) => {
         console.log('全解压data：', this.allUnzipData)
         console.log('nodeSourceMap', this.nodeSourceMap)
-        console.log('SAME_ALIAS_OBJ:', this.sameAliasObj)
+        console.log('SAME_ALIAS_OBJ:', this.sameOriginObj)
       })
     }
   }

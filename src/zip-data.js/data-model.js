@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-10 16:28:49
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-10 17:11:54
+ * @LastEditTime: 2020-12-11 16:14:25
  */
 class NodeModel {
   constructor(data) {

@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-10 15:28:06
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-11 15:20:24
+ * @LastEditTime: 2020-12-11 16:42:46
  */
 import _ from 'lodash'
 
@@ -34,7 +34,7 @@ export function getNodeSoure(mapData, nodeId) {
   return mapData.get(nodeId) ? mapData.get(nodeId) : mapData.get('default')
 }
 
-/** 1.1 查询数组重复值的索引们---去重的同事，查看重复值的所用
+/** 1.1 查询数组重复值的索引们---去重同时，查看重复值的索引
  *  查询起终点（起终点对应的id所属来源都已处理好）的来源一致的重复数据的索引：多个/一个
 */
 export function getSameSTLineIndex(arr) {
@@ -53,11 +53,13 @@ export function getSameSTLineIndex(arr) {
         }
       })
     } else {
-      // 如果find不到相同放入arr中，如第一次查a时index为undefined，直接dang
+      // 如果find不到相同放入arr中，如第一次查a时index为undefined
       // source,target 都为第一次值时的数据
       same_data_arr.push({
-        id: `${arr[i].source}_${arr[i].target}`,
+        direction: `${arr[i].source}_${arr[i].target}`,
         source: arr[i].source,
+        sourceOrigin: arr[i].sourceOrigin,
+        targetOrigin: arr[i].targetOrigin,
         target: arr[i].target,
         indexes: [i]
       })
@@ -96,7 +98,7 @@ export function getRateSum(arr) {
  */
 export function getSameLineRate(egesList) {
   // 计算需要合并的线条
-  const new_line_arr = this.getSameSTLineIndex(egesList)
+  const new_line_arr = getSameSTLineIndex(egesList)
   console.log('same_line_Arr', new_line_arr)
   // 对有相同起终点的线条进行流量的合并: 子节点的同来源的起终点最多有4条线
   new_line_arr.map((line) => {
@@ -107,7 +109,7 @@ export function getSameLineRate(egesList) {
         arr_list.push(...egesList[i].traffics)
         console.log(1, '合并line', line.source, line.target, i)
       })
-      const result = this.getRateSum(arr_list)
+      const result = getRateSum(arr_list)
       line.traffics = result
       console.log('result', result)
     } else {
@@ -125,21 +127,18 @@ export function getSameLineRate(egesList) {
  * @param {Array} unZipNode 不需压缩的服务节点，即解压的节点，数据格式为全部压缩后的数据格式，默认全部压缩
  */
 export function zipData(originData, unZipNode = []) {
-  // console.log(variableType('aaa'), originData, unZipNode)
   if (variableType(originData) !== 'object' || !originData) return {}
   if (variableType(unZipNode) !== 'array') return []
   const result = {}
+
   if (unZipNode.length === 0) {
-    // 1.全压缩
-    // 1.1 节点压缩
+    /** 1.全压缩 */
+    // 1.1 节点压缩，单版本作为一个节点，多版本：使用服务级别节点
     if (originData.sameOriginNodes) {
-      console.log('全压缩-节点', originData.sameOriginNodes)
       const new_node_list = []
       // 遍历所有相同来源的版本节点，判断服务级别是单节点还是多节点
       Object.values(originData.sameOriginNodes).map((node_list) => {
         if (Array.isArray(node_list) && node_list.length > 1) {
-          console.log('node_list', node_list)
-
           // 1.多版本
           /** 计算节点合并流量
            * 遍历同源的所有节点，合并节点的流量的数据
@@ -167,6 +166,39 @@ export function zipData(originData, unZipNode = []) {
     } else {
       return
     }
+
+    // 1.2 line处理
+    if (originData.edges) {
+      let new_edges_list = []
+      new_edges_list = originData.edges.map((line) => {
+        /** 起点
+         * 判断起点的来源是单节点 or 有子节点的节点，即服务级别的id是否有多个节点，当前节点是单节点还是子节点
+         * 子节点：线起点: 起点服务级别id
+         * 单节点：不变
+         *  */
+        if (originData.sameOriginNodes[line.sourceOrigin].length > 1) {
+          // 多节点的服务节点
+          line.source = line.sourceOrigin
+        } else if (originData.sameOriginNodes[line.sourceOrigin].length === 1) {
+          // 单节点
+        }
+
+        /** 终点 */
+        if (originData.sameOriginNodes[line.targetOrigin].length > 1) {
+          // 多节点的服务节点
+          line.target = line.targetOrigin
+        } else if (originData.sameOriginNodes[line.targetOrigin].length === 1) {
+          // 单节点
+        }
+        return line
+      })
+      // 去重 && 线流量处理
+      result.edges = getSameLineRate(new_edges_list)
+    } else {
+      console.log('0')
+      return
+    }
+    /** */
   } else if (unZipNode.length !== 0) {
     console.log(0)
     // 部分压缩
