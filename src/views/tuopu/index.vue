@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-09 14:31:39
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-11 15:25:48
+ * @LastEditTime: 2020-12-11 17:20:57
 -->
 <template>
   <article class="tuo-pu">
@@ -47,7 +47,7 @@ export default {
     getAllUnzipDate() {
       this.GetAllUnzipData().then((res) => {
         console.log('全解压data：', this.allUnzipData)
-        console.log('nodeSourceMap', this.nodeSourceMap)
+        // console.log('nodeSourceMap', this.nodeSourceMap)
         console.log('SAME_ALIAS_OBJ:', this.sameOriginObj)
       })
     }

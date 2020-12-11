@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-10 15:28:06
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-11 16:42:46
+ * @LastEditTime: 2020-12-11 17:21:36
  */
 import _ from 'lodash'
 
@@ -111,7 +111,6 @@ export function getSameLineRate(egesList) {
       })
       const result = getRateSum(arr_list)
       line.traffics = result
-      console.log('result', result)
     } else {
       // 2. 单条线，流量等数据不变
       line.traffics = egesList[line.indexes[0]].traffics
