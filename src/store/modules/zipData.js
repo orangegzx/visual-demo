@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-10 17:13:55
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-11 16:46:40
+ * @LastEditTime: 2020-12-14 11:25:19
  */
 import { TP_DATA } from '@/utils/data' // mock数据
 import { NodeModel } from '@/zip-data.js/data-model'
@@ -77,11 +77,12 @@ const actions = {
         nodeSourceMap: map_list,
         sameOriginNodes: same_alias_obj // 方便压缩数据时使用，避免每次压缩时都计算一次。
       })
+      console.log('edges:', edges_list)
 
       /** 全压缩-初始化数据，必须是格式化源数据后*/
       const all_zip_data = zipData(state.allUnzipData)
       commit('SET_ALL_ZIP_DATA', all_zip_data)
-      console.log('all-zip-data:', all_zip_data, 'state:', state.allZipData)
+      console.log('全压缩数据:', state.allZipData)
 
       resolve(TP_DATA)
     })
