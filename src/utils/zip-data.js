@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-10 15:28:06
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-14 14:18:10
+ * @LastEditTime: 2020-12-14 14:20:16
  */
 import _ from 'lodash'
 
@@ -189,7 +189,7 @@ export function zipData(originData, unZipNode = []) {
     if (origin_data.edges) {
       let new_edges_list = []
       new_edges_list = origin_data.edges.map((line) => {
-        /** 1》判断 起点 | 终点 对应节点是单节点 or 子节点
+        /** 1.2-1 判断 起点 | 终点 对应节点是单节点 or 子节点
          * 子节点：线起点: 起点服务级别id
          * 单节点：不变
          *  */
@@ -212,7 +212,7 @@ export function zipData(originData, unZipNode = []) {
 
         return line
       })
-      // 2》去重 && 线流量处理
+      // 1.2-2 去重 && 线流量处理
       result.edges = getSameLineRate(new_edges_list)
     } else {
       console.log('0')
