@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-10 15:28:06
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-14 11:28:05
+ * @LastEditTime: 2020-12-14 12:01:48
  */
 import _ from 'lodash'
 
@@ -41,6 +41,9 @@ export function getNodeSoure(mapData, nodeId) {
  */
 export function getRateSum(arr) {
   // 1.全部求和
+  const keys = Object.keys(arr)
+  const count = keys.length / 3 // 3个type，共几组
+  console.log('key', keys)
   const result = Object.values(arr.reduce((acc, { type, protocol, direction, rate }) => {
     acc[type] = {
       type,
@@ -53,7 +56,7 @@ export function getRateSum(arr) {
   // 2.平均率：求平均值
   result.map(item => {
     if (item.type === 'avg_latency') {
-      item.rate = item.rate ? item.rate / 2 : 0
+      item.rate = item.rate ? item.rate / count : 0
     }
   })
   return result
@@ -84,7 +87,7 @@ export function getSameSTLineIndex(arr) {
       same_data_arr.push({
         source: arr[i].source, // 新的连线
         target: arr[i].target,
-        // oldSource: arr[i].oldSource, // 原连线
+        // oldSource: arr[i].oldSource, // 原连线,多条线一样时，oldsource无效，如v1-v3与v1-v4合并时，合成线的oldcource取？（默认第一个）
         // oldTarget: arr[i].oldTarget,
         sourceOrigin: arr[i].sourceOrigin, // 服务级别的来源
         targetOrigin: arr[i].targetOrigin,
@@ -103,10 +106,10 @@ export function getSameLineRate(egesList) {
   // 去重连线
   console.log('去重前：', egesList)
   console.log('去重后的线条', getSameSTLineIndex(egesList))
-  const new_line_arr = getSameSTLineIndex(egesList)
-  console.log('去重&&流量后线条', new_line_arr)
+  const deduplication_line = getSameSTLineIndex(egesList)
+  console.log('去重&&流量后线条', deduplication_line)
   // 对有相同起终点的线条进行流量的合并: 子节点的同来源的起终点最多有4条线
-  new_line_arr.map((line) => {
+  const new_line_arr = deduplication_line.map((line) => {
     const children_line = []
     if (line.indexes.length > 1) {
       // 1.合并多条线的流量计算
