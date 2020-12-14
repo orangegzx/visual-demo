@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-10 15:28:06
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-14 17:02:20
+ * @LastEditTime: 2020-12-14 17:36:32
  */
 import _ from 'lodash'
 
@@ -100,7 +100,7 @@ export function getSameSTLineIndex(arr) {
 /** 全压缩-线条合并: 包括线条的去重、流量计算
  * @param {Array} egesList 已处理的线条，即来源相同，终点相同的线
  */
-export function getSameLineRate(egesList) {
+export function mergeLine(egesList) {
   // 去重连线
   console.log('1去重前：', egesList)
   const deduplication_line = getSameSTLineIndex(egesList)
@@ -170,21 +170,23 @@ export function zipData(originData, unZipNode = []) {
           const node_traffics = getRateSum(traffics_arr) // 合并流量
           // 根据alias取唯一,作为父节点。合并同来源的版本节点为服务节点
           let serve_n = {}
-          serve_n = _.cloneDeep(node_list[0])
+          serve_n = _.cloneDeep(node_list[0]) // 主要提取所有字段
           serve_n.versionList = node_list
           serve_n.traffics = []
           serve_n.id = serve_n.alias
           serve_n.version = ''
           serve_n.traffics = node_traffics
           new_node_list.push(serve_n)
-        } else {
+        } else if (Array.isArray(node_list) && node_list.length === 1) {
           // 2.单版本：所有属性不变，id还是版本id
           new_node_list.push(node_list[0])
+        } else {
+          return origin_data
         }
       })
       result.nodes = new_node_list
     } else {
-      return
+      return origin_data
     }
 
     // 1.2 line处理: 起点和终点对应的节点是否压缩来对线条合并
@@ -215,10 +217,10 @@ export function zipData(originData, unZipNode = []) {
         return line
       })
       // 1.2-2 去重 && 线流量处理
-      result.edges = getSameLineRate(new_edges_list)
+      result.edges = mergeLine(new_edges_list)
     } else {
       console.log('0')
-      return
+      return origin_data
     }
   } else if (unZipNode.length !== 0) {
     /** 2.部分压缩(包含全解压)
