@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-10 17:13:55
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-14 11:25:19
+ * @LastEditTime: 2020-12-14 15:05:50
  */
 import { TP_DATA } from '@/utils/data' // mock数据
 import { NodeModel } from '@/zip-data.js/data-model'
@@ -82,7 +82,7 @@ const actions = {
       /** 全压缩-初始化数据，必须是格式化源数据后*/
       const all_zip_data = zipData(state.allUnzipData)
       commit('SET_ALL_ZIP_DATA', all_zip_data)
-      console.log('全压缩数据:', state.allZipData)
+      console.log('全压缩数据0:', state.allZipData)
 
       resolve(TP_DATA)
     })

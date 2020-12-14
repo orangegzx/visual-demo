@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-10 15:28:06
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-14 14:20:16
+ * @LastEditTime: 2020-12-14 17:02:20
  */
 import _ from 'lodash'
 
@@ -141,15 +141,17 @@ export function getSameLineRate(egesList) {
 
 /** 压缩数据
  * @param {Object} originData 版本级别的数据，即全解压的数据，包节点eges、连线nodes
+ * originData:{ edges,nodes,sameOriginNodes,nodeSourceMap}, 必须的key
  * @param {Array} unZipNode 不需压缩的服务节点，即解压的节点，数据格式为全部压缩后的数据格式，默认全部压缩
  */
 export function zipData(originData, unZipNode = []) {
   const origin_data = _.cloneDeep(originData) // 深拷贝问题
   if (variableType(origin_data) !== 'object' || !origin_data) return {}
-  if (variableType(unZipNode) !== 'array') return []
+  if (variableType(unZipNode) !== 'array') return {}
   const result = {}
 
   if (unZipNode.length === 0) {
+    console.log('全部压缩')
     /** 1.全压缩 */
     // 1.1 节点压缩，单版本作为一个节点，多版本：使用服务级别节点
     if (origin_data.sameOriginNodes) {
@@ -219,11 +221,34 @@ export function zipData(originData, unZipNode = []) {
       return
     }
   } else if (unZipNode.length !== 0) {
-    // 部分压缩
-    console.log(0)
+    /** 2.部分压缩(包含全解压)
+     *  */
+    const unZip_Node = _.cloneDeep(unZipNode)
+    const node_list = originData && originData.nodes ? originData.nodes : []
+    console.log(0, '部分压缩', origin_data, unZip_Node[0])
+    // 2.1 节点释放
+    if (Array.isArray(node_list) && node_list.length && unZipNode[0]) {
+      const free_n_index = node_list.findIndex(node => node.id === unZipNode[0].id)
+      // 1》判断解压的node是包含多个子节点 or 单节点
+      if (free_n_index === -1 || !node_list[free_n_index].versionList) {
+        // 无解压数据 || 单节点：无versionList：返回原数据----单节点无数据解压
+        console.log('解压数据不存在 || 单节点不可解压')
+        return origin_data
+      }
+      // 包含多子节点时
+      const children_node_list = node_list[free_n_index].versionList
+      node_list.splice(free_n_index, 1) // 从源节点中删除释放的节点（服务级别）
+      node_list.push(...children_node_list) // 合并释放的节点
+      result.nodes = node_list
+    } else {
+      console.log('传参数据无节点信息')
+      return origin_data
+    }
+  //
   } else {
     // 全解压
     console.log('01')
   }
+  console.log('result', result)
   return result
 }
