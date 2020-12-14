@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-10 15:28:06
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-14 12:01:48
+ * @LastEditTime: 2020-12-14 14:18:10
  */
 import _ from 'lodash'
 
@@ -43,7 +43,6 @@ export function getRateSum(arr) {
   // 1.全部求和
   const keys = Object.keys(arr)
   const count = keys.length / 3 // 3个type，共几组
-  console.log('key', keys)
   const result = Object.values(arr.reduce((acc, { type, protocol, direction, rate }) => {
     acc[type] = {
       type,
@@ -67,7 +66,6 @@ export function getRateSum(arr) {
 */
 export function getSameSTLineIndex(arr) {
   const same_data_arr = []
-  console.log('aarr0', arr)
   for (var i = 0; i < arr.length; i++) {
     // 从存储相同数据的数组中查询是否已存在相同的值，存在相同值时，则放入对应的数据中，否则push新的值到same_data_arr中
     const index = same_data_arr.find(function(x) {
@@ -104,10 +102,9 @@ export function getSameSTLineIndex(arr) {
  */
 export function getSameLineRate(egesList) {
   // 去重连线
-  console.log('去重前：', egesList)
-  console.log('去重后的线条', getSameSTLineIndex(egesList))
+  console.log('1去重前：', egesList)
   const deduplication_line = getSameSTLineIndex(egesList)
-  console.log('去重&&流量后线条', deduplication_line)
+  console.log('2去重后线条', deduplication_line)
   // 对有相同起终点的线条进行流量的合并: 子节点的同来源的起终点最多有4条线
   const new_line_arr = deduplication_line.map((line) => {
     const children_line = []
@@ -138,7 +135,7 @@ export function getSameLineRate(egesList) {
     line.children = children_line
     return line
   })
-  console.log('new-line', new_line_arr)
+  console.log('3去重&&流量后line', new_line_arr)
   return new_line_arr
 }
 
@@ -192,8 +189,7 @@ export function zipData(originData, unZipNode = []) {
     if (origin_data.edges) {
       let new_edges_list = []
       new_edges_list = origin_data.edges.map((line) => {
-        /** 起点
-         * 判断起点的来源是单节点 or 有子节点的节点，即服务级别的id是否有多个节点，当前节点是单节点还是子节点
+        /** 1》判断 起点 | 终点 对应节点是单节点 or 子节点
          * 子节点：线起点: 起点服务级别id
          * 单节点：不变
          *  */
@@ -216,20 +212,18 @@ export function zipData(originData, unZipNode = []) {
 
         return line
       })
-      // 去重 && 线流量处理
+      // 2》去重 && 线流量处理
       result.edges = getSameLineRate(new_edges_list)
     } else {
       console.log('0')
       return
     }
-    console.log('去重后line', result)
-    /** */
   } else if (unZipNode.length !== 0) {
-    console.log(0)
     // 部分压缩
+    console.log(0)
   } else {
-    console.log('01')
     // 全解压
+    console.log('01')
   }
   return result
 }
