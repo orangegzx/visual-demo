@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-10 15:28:06
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-15 16:52:54
+ * @LastEditTime: 2020-12-15 16:57:22
  */
 import _ from 'lodash'
 
@@ -260,10 +260,10 @@ export function zipData(originData, unZipNode = []) {
     /** 2.2 释放line && 流量计算 */
     let edge_list = origin_data && origin_data.edges ? origin_data.edges : []
     if (Array.isArray(edge_list) && edge_list.length) {
-      const line_list = []
+      const children_line_list = [] // 包含起点、终点为解压node_id的需释放的line集合
 
       edge_list = edge_list.map((line) => {
-        // 2.2-1 起点相同 =》判断起点为解压节点id的line是单连线还是已合并过
+        // 2.2-1 解压节点为连线的起点 =》判断起点为解压节点id的line是单连线还是已合并过
         if (unZipNode[0].id === line.source) {
           console.log('要解压的节点其为起点的连线同', line.source, line.target)
           // 释放子line：单线条 or 已合并的line
@@ -275,7 +275,7 @@ export function zipData(originData, unZipNode = []) {
               new_line.traffics = line.children[i].traffics// 流量子line’的流量（子节点终点可能为合并后的，所以此处流量仅代表全展开数据中的流量处理了终点的来源）
               new_line.sourceOrigin = line.sourceOrigin
               new_line.targetOrigin = line.targetOrigin
-              line_list.push(new_line)
+              children_line_list.push(new_line)
             }
           } else {
             const new_line = {}
@@ -285,19 +285,20 @@ export function zipData(originData, unZipNode = []) {
             new_line.traffics = line.children[0].traffics
             new_line.sourceOrigin = line.sourceOrigin
             new_line.targetOrigin = line.targetOrigin
-            line_list.push(new_line)
+            children_line_list.push(new_line)
           }
         } else {
           console.log('要解压的节点其为起点的连线不同', line.source, line.target)
         }
+
         // 2.2-2 解压节点为连线的终点
 
         return line
       })
       // 释放出的子线条去重 && 计算流量：可能存在起点终点都是是合并节点且都有连线的情况
-      const after_merge_line_list = mergeLine(line_list)
+      const after_merge_line_list = mergeLine(children_line_list)
       // 移除起点为解压的节点的id
-      const new_line_list = edge_list.filter(line => line.source !== unZipNode[0].id)
+      const new_line_list = edge_list.filter(line => line.source !== unZipNode[0].id || line.target !== unZipNode[0].id) // 起点 + 终点
       new_line_list.push(...after_merge_line_list)// 合并所有线条
       result.edges = new_line_list
       console.log('解压&&去重的line', edge_list, new_line_list, after_merge_line_list)
@@ -305,7 +306,6 @@ export function zipData(originData, unZipNode = []) {
       console.log('传参数据无连线信息')
       return origin_data
     }
-  //
   } else {
     // 全解压
     console.log('01')
