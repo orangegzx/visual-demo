@@ -3,11 +3,12 @@
  * @Descripttion:
  * @Date: 2020-12-09 14:31:39
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-14 16:55:13
+ * @LastEditTime: 2020-12-15 16:32:25
 -->
 <template>
   <article class="tuo-pu">
     <div>allUnzipData</div>
+    <el-button @click="getAllUnzipDate">重置</el-button>
     <el-button @click="unzip('bookinfo/a/v1')">解压a</el-button>
     <el-button @click="unzip('bookinfo/b')">解压b</el-button>
     <el-button @click="unzip('bookinfo/c')">解压c</el-button>
@@ -66,9 +67,6 @@ export default {
         nodeSourceMap: this.nodeSourceMap
       }
       const node = this.allZipData.nodes.find(node => node.id === id)
-      // const node_c = this.allZipData.nodes.find(node => node.id === 'bookinfo/c')
-      console.log('params', params, node)
-
       this.tpData = zipData(params, [node])
       console.log('eg-r', this.tpData)
     }
