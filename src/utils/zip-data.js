@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-10 15:28:06
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-15 16:57:22
+ * @LastEditTime: 2020-12-15 17:07:20
  */
 import _ from 'lodash'
 
@@ -297,11 +297,13 @@ export function zipData(originData, unZipNode = []) {
       })
       // 释放出的子线条去重 && 计算流量：可能存在起点终点都是是合并节点且都有连线的情况
       const after_merge_line_list = mergeLine(children_line_list)
-      // 移除起点为解压的节点的id
-      const new_line_list = edge_list.filter(line => line.source !== unZipNode[0].id || line.target !== unZipNode[0].id) // 起点 + 终点
+      // 移除起点为解压的节点的id:起点和终点都不为解压nodeid
+      const new_line_list = edge_list.filter((line) => line.source !== unZipNode[0].id && line.target !== unZipNode[0].id)
       new_line_list.push(...after_merge_line_list)// 合并所有线条
       result.edges = new_line_list
-      console.log('解压&&去重的line', edge_list, new_line_list, after_merge_line_list)
+      console.log('原line', ...edge_list)
+      console.log('解压后cd_line ', ...after_merge_line_list)
+      console.log('解压后new_line ', ...new_line_list)
     } else {
       console.log('传参数据无连线信息')
       return origin_data
