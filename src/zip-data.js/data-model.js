@@ -3,14 +3,14 @@
  * @Descripttion:
  * @Date: 2020-12-10 16:28:49
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-11 16:14:25
+ * @LastEditTime: 2020-12-15 14:08:10
  */
 class NodeModel {
   constructor(data) {
     this._data = data
     return {
       id: data.id || '',
-      alias: `${data.namespace}/${data.name}`,
+      serviceNode: `${data.namespace}/${data.name}`,
       type: data.type || '',
       namespace: data.namespace,
       name: data.name || '',

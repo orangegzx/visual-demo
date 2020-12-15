@@ -62,7 +62,7 @@ const actions = {
       })
       commit('SET_NODE_SOURCE', map_list)
       // 3. 节点：根据服务级别分组为相同服务级别的集合
-      const same_alias_obj = _.groupBy(node_list, 'alias')
+      const same_alias_obj = _.groupBy(node_list, 'serviceNode')
       commit('SET_SAME_ALIAS_OBJ', same_alias_obj)
 
       /** 线条数据处理 */

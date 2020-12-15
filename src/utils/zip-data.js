@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-10 15:28:06
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-14 17:36:32
+ * @LastEditTime: 2020-12-15 14:12:28
  */
 import _ from 'lodash'
 
@@ -173,12 +173,13 @@ export function zipData(originData, unZipNode = []) {
           serve_n = _.cloneDeep(node_list[0]) // 主要提取所有字段
           serve_n.versionList = node_list
           serve_n.traffics = []
-          serve_n.id = serve_n.alias
+          serve_n.id = serve_n.serviceNode
           serve_n.version = ''
           serve_n.traffics = node_traffics
           new_node_list.push(serve_n)
         } else if (Array.isArray(node_list) && node_list.length === 1) {
           // 2.单版本：所有属性不变，id还是版本id
+          node_list[0].versionList = []
           new_node_list.push(node_list[0])
         } else {
           return origin_data
@@ -232,7 +233,7 @@ export function zipData(originData, unZipNode = []) {
     if (Array.isArray(node_list) && node_list.length && unZipNode[0]) {
       const free_n_index = node_list.findIndex(node => node.id === unZipNode[0].id)
       // 1》判断解压的node是包含多个子节点 or 单节点
-      if (free_n_index === -1 || !node_list[free_n_index].versionList) {
+      if (free_n_index === -1 || !(node_list[free_n_index].versionList && node_list[free_n_index].versionList.length)) {
         // 无解压数据 || 单节点：无versionList：返回原数据----单节点无数据解压
         console.log('解压数据不存在 || 单节点不可解压')
         return origin_data
