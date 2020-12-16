@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-10 15:28:06
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-15 17:07:20
+ * @LastEditTime: 2020-12-16 11:06:29
  */
 import _ from 'lodash'
 
@@ -99,6 +99,11 @@ export function getSameSTLineIndex(arr) {
 
 /** 全压缩-线条合并: 包括线条的去重、流量计算
  * @param {Array} egesList 已处理的线条，即来源相同，终点相同的线
+ * {
+ * source、target: 起终点---已经过处理，如全压缩已处理：b/v1=> b
+ * originsSource,originsTarget：对source和target的serviceNode来源，如b
+ * oldSource、oldTarget：未处理的source、target，如b/v1
+ * }
  */
 export function mergeLine(egesList) {
   // 去重连线
@@ -106,7 +111,7 @@ export function mergeLine(egesList) {
   const deduplication_line = getSameSTLineIndex(egesList)
   console.log('2去重后线条', deduplication_line)
   // 对有相同起终点的线条进行流量的合并: 子节点的同来源的起终点最多有4条线
-  const new_line_arr = deduplication_line.map((line) => {
+  let new_line_arr = deduplication_line.map((line) => {
     const children_line = []
     if (line.indexes.length > 1) {
       // 1.合并多条线的流量计算
@@ -136,6 +141,7 @@ export function mergeLine(egesList) {
     return line
   })
   console.log('3去重&&流量后line', new_line_arr)
+  new_line_arr = new_line_arr.filter(line => delete line.indexes) // 删除indexes属性
   return new_line_arr
 }
 
@@ -270,11 +276,13 @@ export function zipData(originData, unZipNode = []) {
           if (line.children && Array.isArray(line.children) && line.children.length > 1) {
             for (let i = 0; i < line.children.length; i++) {
               const new_line = {} // 释放子节点=》新的起点的line
+              new_line.sourceOrigin = line.sourceOrigin
+              new_line.targetOrigin = line.targetOrigin
+              new_line.oldSource = line.children[i].source // 标记源起终点
+              new_line.oldTarget = line.children[i].target
               new_line.source = line.children[i].source
               new_line.target = line.target // 终点不变
               new_line.traffics = line.children[i].traffics// 流量子line’的流量（子节点终点可能为合并后的，所以此处流量仅代表全展开数据中的流量处理了终点的来源）
-              new_line.sourceOrigin = line.sourceOrigin
-              new_line.targetOrigin = line.targetOrigin
               children_line_list.push(new_line)
             }
           } else {
@@ -283,8 +291,8 @@ export function zipData(originData, unZipNode = []) {
             new_line.source = line.children[0].source
             new_line.target = line.target
             new_line.traffics = line.children[0].traffics
-            new_line.sourceOrigin = line.sourceOrigin
-            new_line.targetOrigin = line.targetOrigin
+            // new_line.sourceOrigin = line.sourceOrigin
+            // new_line.targetOrigin = line.targetOrigin
             children_line_list.push(new_line)
           }
         } else {
