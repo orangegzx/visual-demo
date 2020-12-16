@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-10 15:28:06
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-16 11:06:29
+ * @LastEditTime: 2020-12-16 11:15:31
  */
 import _ from 'lodash'
 
@@ -32,6 +32,14 @@ export function variableType(v) {
 export function getNodeSoure(mapData, nodeId) {
   if (variableType(mapData) !== 'map') return
   return mapData.get(nodeId) ? mapData.get(nodeId) : mapData.get('default')
+}
+
+/** 去除数组中空对象 */
+export function removeArrEmptyObj(arr) {
+  const list = arr
+  if (!Array.isArray(list)) return arr
+  const new_arr = arr.filter(item => Object.keys(item).length !== 0)
+  return new_arr
 }
 
 /** 流量的合并计算
@@ -80,13 +88,11 @@ export function getSameSTLineIndex(arr) {
         }
       })
     } else {
-      // 如果find不到相同放入arr中，如第一次查a时index为undefined
-      // source,target 都为第一次值时的数据
+      // 如果find不到相同放入arr中，如第一次查a时index为undefined，source,target 都为第一次值时的数据
       same_data_arr.push({
         source: arr[i].source, // 新的连线
         target: arr[i].target,
         // oldSource: arr[i].oldSource, // 原连线,多条线一样时，oldsource无效，如v1-v3与v1-v4合并时，合成线的oldcource取？（默认第一个）
-        // oldTarget: arr[i].oldTarget,
         sourceOrigin: arr[i].sourceOrigin, // 服务级别的来源
         targetOrigin: arr[i].targetOrigin,
         indexes: [i], // 重复的连线的索引集合
@@ -143,14 +149,6 @@ export function mergeLine(egesList) {
   console.log('3去重&&流量后line', new_line_arr)
   new_line_arr = new_line_arr.filter(line => delete line.indexes) // 删除indexes属性
   return new_line_arr
-}
-
-/** 去除数组中空对象 */
-export function removeArrEmptyObj(arr) {
-  const list = arr
-  if (!Array.isArray(list)) return arr
-  const new_arr = arr.filter(item => Object.keys(item).length !== 0)
-  return new_arr
 }
 
 /** 压缩数据
@@ -276,13 +274,13 @@ export function zipData(originData, unZipNode = []) {
           if (line.children && Array.isArray(line.children) && line.children.length > 1) {
             for (let i = 0; i < line.children.length; i++) {
               const new_line = {} // 释放子节点=》新的起点的line
+              new_line.source = line.children[i].source
+              new_line.target = line.target // 终点不变
+              new_line.traffics = line.children[i].traffics// 流量子line’的流量（子节点终点可能为合并后的，所以此处流量仅代表全展开数据中的流量处理了终点的来源）
               new_line.sourceOrigin = line.sourceOrigin
               new_line.targetOrigin = line.targetOrigin
               new_line.oldSource = line.children[i].source // 标记源起终点
               new_line.oldTarget = line.children[i].target
-              new_line.source = line.children[i].source
-              new_line.target = line.target // 终点不变
-              new_line.traffics = line.children[i].traffics// 流量子line’的流量（子节点终点可能为合并后的，所以此处流量仅代表全展开数据中的流量处理了终点的来源）
               children_line_list.push(new_line)
             }
           } else {
@@ -291,8 +289,10 @@ export function zipData(originData, unZipNode = []) {
             new_line.source = line.children[0].source
             new_line.target = line.target
             new_line.traffics = line.children[0].traffics
-            // new_line.sourceOrigin = line.sourceOrigin
-            // new_line.targetOrigin = line.targetOrigin
+            new_line.sourceOrigin = line.sourceOrigin
+            new_line.targetOrigin = line.targetOrigin
+            new_line.oldSource = line.children[0].source
+            new_line.oldTarget = line.children[0].target
             children_line_list.push(new_line)
           }
         } else {
