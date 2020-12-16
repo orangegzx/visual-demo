@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-10 15:28:06
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-16 11:15:31
+ * @LastEditTime: 2020-12-16 14:53:17
  */
 import _ from 'lodash'
 
@@ -269,7 +269,7 @@ export function zipData(originData, unZipNode = []) {
       edge_list = edge_list.map((line) => {
         // 2.2-1 解压节点为连线的起点 =》判断起点为解压节点id的line是单连线还是已合并过
         if (unZipNode[0].id === line.source) {
-          console.log('要解压的节点其为起点的连线同', line.source, line.target)
+          // console.log('要解压的节点其为起点的连线同', line.source, line.target)
           // 释放子line：单线条 or 已合并的line
           if (line.children && Array.isArray(line.children) && line.children.length > 1) {
             for (let i = 0; i < line.children.length; i++) {
@@ -295,11 +295,42 @@ export function zipData(originData, unZipNode = []) {
             new_line.oldTarget = line.children[0].target
             children_line_list.push(new_line)
           }
-        } else {
-          console.log('要解压的节点其为起点的连线不同', line.source, line.target)
         }
 
         // 2.2-2 解压节点为连线的终点
+        if (unZipNode[0].id === line.target) {
+          // console.log('target', line.source, line.target)
+          if (line.children && Array.isArray(line.children)) {
+            if (line.children.length > 1) {
+            // 多线合并的line
+              for (let i = 0; i < line.children.length; i++) {
+                const new_line = {}
+                new_line.source = line.source
+                new_line.target = line.children[i].target
+                new_line.traffics = line.children[i].traffics
+                new_line.sourceOrigin = line.sourceOrigin
+                new_line.targetOrigin = line.targetOrigin
+                new_line.oldSource = line.children[i].source
+                new_line.oldTarget = line.children[i].target
+                children_line_list.push(new_line)
+              }
+            } else if (line.children.length === 1) {
+              // 单线
+              const new_line = {}
+              new_line.source = line.source
+              new_line.target = line.children[0].target
+              new_line.traffics = line.children[0].traffics
+              new_line.sourceOrigin = line.sourceOrigin
+              new_line.targetOrigin = line.targetOrigin
+              new_line.oldSource = line.children[0].source
+              new_line.oldTarget = line.children[0].target
+              children_line_list.push(new_line)
+            }
+          } else {
+            console.log('无line.children字段')
+            return
+          }
+        }
 
         return line
       })
@@ -316,6 +347,7 @@ export function zipData(originData, unZipNode = []) {
       console.log('传参数据无连线信息')
       return origin_data
     }
+  //
   } else {
     // 全解压
     console.log('01')

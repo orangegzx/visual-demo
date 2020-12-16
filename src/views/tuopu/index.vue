@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-09 14:31:39
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-16 11:09:54
+ * @LastEditTime: 2020-12-16 15:02:37
 -->
 <template>
   <article class="tuo-pu">
@@ -59,15 +59,15 @@ export default {
     },
     // eg
     unzip(id) {
-      const { nodes, edges } = this.allZipData
-      const params = {
-        edges,
-        nodes,
-        sameOriginNodes: this.sameOriginObj,
-        nodeSourceMap: this.nodeSourceMap
-      }
+      // const { nodes, edges } = this.allZipData
+      // const params = {
+      //   edges,
+      //   nodes,
+      //   sameOriginNodes: this.sameOriginObj,
+      //   nodeSourceMap: this.nodeSourceMap
+      // }
       const node = this.allZipData.nodes.find(node => node.id === id)
-      this.tpData = zipData(params, [node])
+      this.tpData = zipData(this.tpData, [node])
       console.log('eg-r', this.tpData)
     }
 
