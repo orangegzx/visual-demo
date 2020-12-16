@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-10 15:28:06
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-16 14:53:17
+ * @LastEditTime: 2020-12-16 17:29:34
  */
 import _ from 'lodash'
 
@@ -41,6 +41,12 @@ export function removeArrEmptyObj(arr) {
   const new_arr = arr.filter(item => Object.keys(item).length !== 0)
   return new_arr
 }
+/** 判断是否数组是否为数组 && 数组是否不是空数组 */
+export function isArrNotEmpty(arr) {
+  if (Array.isArray(arr)) return true
+  if (Array.isArray(arr) && arr.length) return true
+  return false
+}
 
 /** 流量的合并计算
  * @param {Array} arr 多条线的traffics字段数据的集合
@@ -48,6 +54,7 @@ export function removeArrEmptyObj(arr) {
  *      先全部求和，再进行筛选出平均率计算平均值
  */
 export function getRateSum(arr) {
+  if (!isArrNotEmpty(arr)) return 0
   // 1.全部求和
   const keys = Object.keys(arr)
   const count = keys.length / 3 // 3个type，共几组
@@ -73,6 +80,7 @@ export function getRateSum(arr) {
  *  查询起终点（起终点对应的id所属来源都已处理好）的来源一致的重复数据的索引：多个/一个
 */
 export function getSameSTLineIndex(arr) {
+  if (!isArrNotEmpty(arr)) return arr
   const same_data_arr = []
   for (var i = 0; i < arr.length; i++) {
     // 从存储相同数据的数组中查询是否已存在相同的值，存在相同值时，则放入对应的数据中，否则push新的值到same_data_arr中
@@ -112,8 +120,9 @@ export function getSameSTLineIndex(arr) {
  * }
  */
 export function mergeLine(egesList) {
-  // 去重连线
+  if (!isArrNotEmpty(egesList)) return egesList
   console.log('1去重前：', egesList)
+  // 去重连线
   const deduplication_line = getSameSTLineIndex(egesList)
   console.log('2去重后线条', deduplication_line)
   // 对有相同起终点的线条进行流量的合并: 子节点的同来源的起终点最多有4条线
@@ -157,13 +166,13 @@ export function mergeLine(egesList) {
  * @param {Array} unZipNode 不需压缩的服务节点，即解压的节点，数据格式为全部压缩后的数据格式，默认全部压缩
  */
 export function zipData(originData, unZipNode = []) {
+  console.log('zip params:', origin_data, unZipNode[0])
   const origin_data = _.cloneDeep(originData) // 深拷贝问题
   if (variableType(origin_data) !== 'object' || !origin_data) return {}
   if (variableType(unZipNode) !== 'array') return {}
   const result = {}
 
   if (unZipNode.length === 0) {
-    console.log('全部压缩')
     /** 1.全压缩 */
     // 1.1 节点压缩，单版本作为一个节点，多版本：使用服务级别节点
     if (origin_data.sameOriginNodes) {
@@ -194,7 +203,7 @@ export function zipData(originData, unZipNode = []) {
           node_list[0].versionList = []
           new_node_list.push(node_list[0])
         } else {
-          return origin_data
+          console.log('全部压缩-节点数据为空')
         }
       })
       result.nodes = new_node_list
@@ -216,7 +225,7 @@ export function zipData(originData, unZipNode = []) {
           // 多节点的服务节点
           line.source = line.sourceOrigin
         } else if (origin_data.sameOriginNodes[line.sourceOrigin].length === 1) {
-          // 单节点
+          // 单节点-不做处理
         }
 
         /** 终点 */
@@ -224,7 +233,7 @@ export function zipData(originData, unZipNode = []) {
           // 多节点的服务节点
           line.target = line.targetOrigin
         } else if (origin_data.sameOriginNodes[line.targetOrigin].length === 1) {
-          // 单节点
+          // 单节点-不作处理
         }
 
         return line
@@ -232,15 +241,12 @@ export function zipData(originData, unZipNode = []) {
       // 1.2-2 去重 && 线流量处理
       result.edges = mergeLine(new_edges_list)
     } else {
-      console.log('0')
-      return origin_data
+      result.edges = origin_data.edges || []
     }
   } else if (unZipNode.length !== 0) {
     /** 2.部分压缩(包含全解压)
      *  */
-    const unZip_Node = _.cloneDeep(unZipNode)
     const node_list = origin_data && origin_data.nodes ? origin_data.nodes : []
-    console.log(0, '部分压缩', origin_data, unZip_Node[0])
 
     /** 2.1 节点释放（节点流量无需计算） */
     if (Array.isArray(node_list) && node_list.length && unZipNode[0]) {
@@ -258,7 +264,7 @@ export function zipData(originData, unZipNode = []) {
       result.nodes = node_list
     } else {
       console.log('传参数据无节点信息')
-      return origin_data
+      result.nodes = origin_data.nodes || []
     }
 
     /** 2.2 释放line && 流量计算 */
@@ -269,37 +275,40 @@ export function zipData(originData, unZipNode = []) {
       edge_list = edge_list.map((line) => {
         // 2.2-1 解压节点为连线的起点 =》判断起点为解压节点id的line是单连线还是已合并过
         if (unZipNode[0].id === line.source) {
-          // console.log('要解压的节点其为起点的连线同', line.source, line.target)
           // 释放子line：单线条 or 已合并的line
-          if (line.children && Array.isArray(line.children) && line.children.length > 1) {
-            for (let i = 0; i < line.children.length; i++) {
-              const new_line = {} // 释放子节点=》新的起点的line
-              new_line.source = line.children[i].source
-              new_line.target = line.target // 终点不变
-              new_line.traffics = line.children[i].traffics// 流量子line’的流量（子节点终点可能为合并后的，所以此处流量仅代表全展开数据中的流量处理了终点的来源）
+          if (line.children && Array.isArray(line.children)) {
+            if (line.children.length > 1) {
+              for (let i = 0; i < line.children.length; i++) {
+                const new_line = {} // 释放子节点=》新的起点的line
+                new_line.source = line.children[i].source
+                new_line.target = line.target // 终点不变
+                new_line.traffics = line.children[i].traffics// 流量子line’的流量（子节点终点可能为合并后的，所以此处流量仅代表全展开数据中的流量处理了终点的来源）
+                new_line.sourceOrigin = line.sourceOrigin
+                new_line.targetOrigin = line.targetOrigin
+                new_line.oldSource = line.children[i].source // 标记源起终点
+                new_line.oldTarget = line.children[i].target
+                children_line_list.push(new_line)
+              }
+            } else if (line.children.length === 1) {
+              const new_line = {}
+              new_line.source = line.children[0].source
+              new_line.target = line.target
+              new_line.traffics = line.children[0].traffics
               new_line.sourceOrigin = line.sourceOrigin
               new_line.targetOrigin = line.targetOrigin
-              new_line.oldSource = line.children[i].source // 标记源起终点
-              new_line.oldTarget = line.children[i].target
+              new_line.oldSource = line.children[0].source
+              new_line.oldTarget = line.children[0].target
               children_line_list.push(new_line)
+            } else {
+              console.log('line.children.length = 0')
             }
           } else {
-            const new_line = {}
-            console.log('起点为‘解压节点id’的line为单线条')
-            new_line.source = line.children[0].source
-            new_line.target = line.target
-            new_line.traffics = line.children[0].traffics
-            new_line.sourceOrigin = line.sourceOrigin
-            new_line.targetOrigin = line.targetOrigin
-            new_line.oldSource = line.children[0].source
-            new_line.oldTarget = line.children[0].target
-            children_line_list.push(new_line)
+            console.log('无line.children字段')
           }
         }
 
         // 2.2-2 解压节点为连线的终点
         if (unZipNode[0].id === line.target) {
-          // console.log('target', line.source, line.target)
           if (line.children && Array.isArray(line.children)) {
             if (line.children.length > 1) {
             // 多线合并的line
@@ -328,7 +337,6 @@ export function zipData(originData, unZipNode = []) {
             }
           } else {
             console.log('无line.children字段')
-            return
           }
         }
 
@@ -345,12 +353,8 @@ export function zipData(originData, unZipNode = []) {
       console.log('解压后new_line ', ...new_line_list)
     } else {
       console.log('传参数据无连线信息')
-      return origin_data
+      result.edges = origin_data.edges || []
     }
-  //
-  } else {
-    // 全解压
-    console.log('01')
   }
   console.log('result', result)
   return result
