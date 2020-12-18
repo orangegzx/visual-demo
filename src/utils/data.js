@@ -337,6 +337,102 @@ const TP_DATA = {
           "rate": 5
         }
       ]
+    },
+    {
+      "source": "bookinfo/c/v1",
+      "target": "bookinfo/f/v1",
+      "traffics": [
+        {
+          "type": "requests",
+          "protocol": "http",
+          "direction": "in",
+          "rate": 5
+        },
+        {
+          "type": "errors",
+          "protocol": "http",
+          "direction": "in",
+          "rate": 6
+        },
+        {
+          "type": "avg_latency",
+          "protocol": "http",
+          "direction": "in",
+          "rate": 7
+        }
+      ]
+    },
+    {
+      "source": "bookinfo/c/v1",
+      "target": "bookinfo/f/v2",
+      "traffics": [
+        {
+          "type": "requests",
+          "protocol": "http",
+          "direction": "in",
+          "rate": 4
+        },
+        {
+          "type": "errors",
+          "protocol": "http",
+          "direction": "in",
+          "rate": 5
+        },
+        {
+          "type": "avg_latency",
+          "protocol": "http",
+          "direction": "in",
+          "rate": 5
+        }
+      ]
+    },
+    {
+      "source": "bookinfo/c/v2",
+      "target": "bookinfo/f/v1",
+      "traffics": [
+        {
+          "type": "requests",
+          "protocol": "http",
+          "direction": "in",
+          "rate": 3
+        },
+        {
+          "type": "errors",
+          "protocol": "http",
+          "direction": "in",
+          "rate": 5
+        },
+        {
+          "type": "avg_latency",
+          "protocol": "http",
+          "direction": "in",
+          "rate": 3
+        }
+      ]
+    },
+    {
+      "source": "bookinfo/c/v2",
+      "target": "bookinfo/f/v2",
+      "traffics": [
+        {
+          "type": "requests",
+          "protocol": "http",
+          "direction": "in",
+          "rate": 6
+        },
+        {
+          "type": "errors",
+          "protocol": "http",
+          "direction": "in",
+          "rate": 9
+        },
+        {
+          "type": "avg_latency",
+          "protocol": "http",
+          "direction": "in",
+          "rate": 5
+        }
+      ]
     }
   ],
   // 合并子节点：源id=》id=namespace + name，version= '',children:[子节点]
@@ -565,7 +661,63 @@ const TP_DATA = {
           "rate": 3
         }
       ]
-    }
+    },
+    {
+      "id": "bookinfo/f/v1",
+      "type": "",
+      "namespace": "bookinfo",
+      "name": "f",
+      "app": "bookinfo",
+      "version": "v1",
+      "traffics": [
+        {
+          "type": "requests",
+          "protocol": "http",
+          "direction": "in",
+          "rate": 3
+        },
+        {
+          "type": "errors",
+          "protocol": "http",
+          "direction": "in",
+          "rate": 3
+        },
+        {
+          "type": "avg_latency",
+          "protocol": "http",
+          "direction": "in",
+          "rate": 4
+        }
+      ]
+    },
+    {
+      "id": "bookinfo/f/v2",
+      "type": "",
+      "namespace": "bookinfo",
+      "name": "f",
+      "app": "bookinfo",
+      "version": "v2",
+      "traffics": [
+        {
+          "type": "requests",
+          "protocol": "http",
+          "direction": "in",
+          "rate": 5
+        },
+        {
+          "type": "errors",
+          "protocol": "http",
+          "direction": "in",
+          "rate": 2
+        },
+        {
+          "type": "avg_latency",
+          "protocol": "http",
+          "direction": "in",
+          "rate": 2
+        }
+      ]
+    },
   ]
 }
 

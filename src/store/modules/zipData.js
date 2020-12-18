@@ -3,12 +3,12 @@
  * @Descripttion:
  * @Date: 2020-12-10 17:13:55
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-14 15:05:50
+ * @LastEditTime: 2020-12-18 15:12:19
  */
 import { TP_DATA } from '@/utils/data' // mock数据
 import { NodeModel } from '@/zip-data.js/data-model'
 import _ from 'lodash'
-import { zipData } from '@/utils/zip-data'
+import { zipAllData } from '@/utils/zip-data'
 
 const state = {
   allUnzipData: {},
@@ -80,7 +80,7 @@ const actions = {
       console.log('edges:', edges_list)
 
       /** 全压缩-初始化数据，必须是格式化源数据后*/
-      const all_zip_data = zipData(state.allUnzipData)
+      const all_zip_data = zipAllData(state.allUnzipData)
       commit('SET_ALL_ZIP_DATA', all_zip_data)
       console.log('全压缩数据0:', state.allZipData)
 

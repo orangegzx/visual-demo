@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-09 14:31:39
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-16 15:02:37
+ * @LastEditTime: 2020-12-18 17:52:48
 -->
 <template>
   <article class="tuo-pu">
@@ -13,13 +13,14 @@
     <el-button @click="unzip('bookinfo/b')">解压b</el-button>
     <el-button @click="unzip('bookinfo/c')">解压c</el-button>
     <el-button @click="unzip('bookinfo/d')">解压d</el-button>
+    <el-button @click="unzip('bookinfo/f')">解压f</el-button>
   </article>
 </template>
 
 <script>
 import _ from 'lodash'
 import { mapActions, mapState } from 'vuex'
-import { zipData } from '@/utils/zip-data'
+import { unzipData } from '@/utils/zip-data'
 
 export default {
   name: 'Tuopu',
@@ -67,7 +68,7 @@ export default {
       //   nodeSourceMap: this.nodeSourceMap
       // }
       const node = this.allZipData.nodes.find(node => node.id === id)
-      this.tpData = zipData(this.tpData, [node])
+      this.tpData = unzipData(this.tpData, [node])
       console.log('eg-r', this.tpData)
     }
 
