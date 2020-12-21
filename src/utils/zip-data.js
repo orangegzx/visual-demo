@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-10 15:28:06
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-18 17:48:49
+ * @LastEditTime: 2020-12-21 18:07:54
  */
 import _ from 'lodash'
 
@@ -46,6 +46,16 @@ export function isArrNotEmpty(arr) {
   if (Array.isArray(arr)) return true
   if (Array.isArray(arr) && arr.length) return true
   return false
+}
+
+/** 按照key进行升(降)序 */
+export function sortByKey(key) {
+  return (a, b) => {
+    const v1 = a[key]
+    const v2 = b[key]
+    return v1 - v2 // 从小到大
+    // return v2 - v1 // 从大到小
+  }
 }
 
 /** 流量的合并计算

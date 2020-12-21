@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-09 14:31:39
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-18 17:52:48
+ * @LastEditTime: 2020-12-21 18:11:51
 -->
 <template>
   <article class="tuo-pu">
@@ -39,7 +39,8 @@ export default {
     ])
   },
   created() {
-    this.getAllUnzipDate()
+    this.a()
+    // this.getAllUnzipDate()
   },
   methods: {
 
