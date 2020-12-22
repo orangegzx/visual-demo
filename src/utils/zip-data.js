@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-10 15:28:06
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-21 18:07:54
+ * @LastEditTime: 2020-12-22 17:06:04
  */
 import _ from 'lodash'
 
@@ -53,6 +53,8 @@ export function sortByKey(key) {
   return (a, b) => {
     const v1 = a[key]
     const v2 = b[key]
+    // const v1 = a[key].charCodeAt(0) // 0 第一个字符
+    // const v2 = b[key].charCodeAt(0)
     return v1 - v2 // 从小到大
     // return v2 - v1 // 从大到小
   }
@@ -251,7 +253,10 @@ export function zipAllData(originData) {
   } else {
     result.edges = origin_data.edges || []
   }
-  console.log('result', result)
+  console.log('result-no-sort', ...result.nodes, ...result.edges)
+  result.nodes = result.nodes ? _.sortBy(result.nodes, function(n) { return n.id }) : []
+  result.edges = result.edges ? _.sortBy(result.edges, function(n) { return n.source }) : []
+  console.log('result-sort', ...result.nodes, ...result.edges)
   return result
 }
 
@@ -376,14 +381,19 @@ export function unzipData(originData, unZipNode = []) {
     // 移除起点为解压的节点的id:起点和终点都不为解压nodeid
     const new_line_list = edge_list.filter((line) => line.source !== unZipNode[0].id && line.target !== unZipNode[0].id)
     new_line_list.push(...after_merge_line_list)// 合并所有线条
+    // const sort_edge_list = _.sortBy(new_line_list, function(n) { return n.source })
     result.edges = new_line_list
     console.log('原line', ...edge_list)
     console.log('解压后cd_line ', ...after_merge_line_list)
     console.log('解压后new_line ', ...new_line_list)
+    // console.log('解压后sort_line ', ...sort_edge_list)
   } else {
     console.log('传参数据无连线信息')
     result.edges = edge_list
   }
-  console.log('result', result)
+  console.log('result-未排序', ...result.nodes, ...result.edges)
+  result.nodes = _.sortBy(result.nodes, function(n) { return n.id })
+  result.edges = _.sortBy(result.edges, function(n) { return n.source })
+  console.log('result-sort', ...result.nodes, ...result.edges)
   return result
 }

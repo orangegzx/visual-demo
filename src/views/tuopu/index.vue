@@ -3,7 +3,7 @@
  * @Descripttion:
  * @Date: 2020-12-09 14:31:39
  * @LastEditors: gezuxia
- * @LastEditTime: 2020-12-21 18:11:51
+ * @LastEditTime: 2020-12-22 16:57:01
 -->
 <template>
   <article class="tuo-pu">
@@ -38,10 +38,11 @@ export default {
       'sameOriginObj'
     ])
   },
+
   created() {
-    this.a()
-    // this.getAllUnzipDate()
+    this.getAllUnzipDate()
   },
+
   methods: {
 
     ...mapActions('zipData', ['GetAllUnzipData']),
